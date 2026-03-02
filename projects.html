@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Projets — Alex Moreau</title>
+  <meta name="description" content="Tous les projets de Alex Moreau, développeur full-stack." />
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+  <!-- ══ NAVBAR ══════════════════════════════════ -->
+  <nav class="navbar" id="navbar">
+    <a class="nav-logo" href="index.html">Alex<span>.</span></a>
+    <ul class="nav-links">
+      <li><a href="index.html">Accueil</a></li>
+      <li><a href="index.html#about">À propos</a></li>
+      <li><a href="index.html#skills">Compétences</a></li>
+      <li><a href="projects.html" class="active">Projets</a></li>
+    </ul>
+    <a class="nav-cta" href="index.html#contact">Me contacter</a>
+    <button class="nav-burger" id="burger" aria-label="Menu">
+      <span></span><span></span><span></span>
+    </button>
+  </nav>
+
+  <!-- Mobile menu -->
+  <div class="nav-mobile" id="nav-mobile">
+    <a href="index.html">Accueil</a>
+    <a href="index.html#about">À propos</a>
+    <a href="index.html#skills">Compétences</a>
+    <a href="projects.html">Projets</a>
+    <a class="nav-cta" href="index.html#contact" style="align-self:flex-start">Me contacter</a>
+  </div>
+
+
+  <!-- ══ PROJECTS HERO ════════════════════════════ -->
+  <section class="proj-hero" style="padding-top: calc(var(--nav-h) + 56px)">
+    <div class="proj-hero-blob"></div>
+    <div class="container">
+
+      <div class="reveal">
+        <p class="section-label">Portfolio</p>
+        <h1 class="section-title">Mes Projets</h1>
+        <p style="font-size:15px;color:var(--muted-2);margin-top:14px;line-height:1.8;max-width:500px">
+          Une sélection de travaux réalisés ces 3 dernières années — du MVP au produit en production.
+        </p>
+      </div>
+
+      <!-- Filters -->
+      <div class="filters reveal" data-delay="0.15">
+        <button class="filter-btn active" data-cat="all">Tous</button>
+        <button class="filter-btn" data-cat="web">Web App <span style="opacity:.6">(2)</span></button>
+        <button class="filter-btn" data-cat="ecom">E-commerce <span style="opacity:.6">(1)</span></button>
+        <button class="filter-btn" data-cat="dash">Dashboard <span style="opacity:.6">(2)</span></button>
+        <button class="filter-btn" data-cat="mobile">Mobile <span style="opacity:.6">(1)</span></button>
+      </div>
+
+    </div>
+  </section>
+
+
+  <!-- ══ PROJECTS GRID ════════════════════════════ -->
+  <div class="container">
+    <div class="proj-grid">
+
+      <!-- Card 1 -->
+      <div class="proj-card reveal" data-cat="web" style="--c:#00d4ff" data-delay="0.05">
+        <div class="proj-header">
+          <span class="proj-cat" style="color:#00d4ff">Web App</span>
+          <div style="display:flex;flex-direction:column;align-items:flex-end;gap:4px">
+            <span class="proj-year">2024</span>
+            <span class="feat-badge">Sélectionné</span>
+          </div>
+        </div>
+        <h3 class="proj-title">Palette Studio</h3>
+        <p class="proj-desc">Outil de génération de palettes avec IA. Export vers Figma, CSS et Tailwind en un clic.</p>
+        <div class="proj-tech">
+          <span>React</span><span>OpenAI API</span><span>Node.js</span>
+        </div>
+        <span class="proj-arrow">↗</span>
+      </div>
+
+      <!-- Card 2 -->
+      <div class="proj-card reveal" data-cat="ecom" style="--c:#a78bfa" data-delay="0.1">
+        <div class="proj-header">
+          <span class="proj-cat" style="color:#a78bfa">E-commerce</span>
+          <div style="display:flex;flex-direction:column;align-items:flex-end;gap:4px">
+            <span class="proj-year">2024</span>
+            <span class="feat-badge">Sélectionné</span>
+          </div>
+        </div>
+        <h3 class="proj-title">Maison Blanche</h3>
+        <p class="proj-desc">Boutique haut de gamme pour une marque de mobilier. SSR, SEO optimisé, score Lighthouse 99.</p>
+        <div class="proj-tech">
+          <span>Next.js</span><span>Stripe</span><span>Sanity CMS</span>
+        </div>
+        <span class="proj-arrow">↗</span>
+      </div>
+
+      <!-- Card 3 -->
+      <div class="proj-card reveal" data-cat="dash" style="--c:#34d399" data-delay="0.15">
+        <div class="proj-header">
+          <span class="proj-cat" style="color:#34d399">Dashboard</span>
+          <span class="proj-year">2023</span>
+        </div>
+        <h3 class="proj-title">AnalytiX</h3>
+        <p class="proj-desc">Dashboard temps réel pour équipes marketing. Visualisation de données et exports PDF automatisés.</p>
+        <div class="proj-tech">
+          <span>React</span><span>D3.js</span><span>FastAPI</span><span>PostgreSQL</span>
+        </div>
+        <span class="proj-arrow">↗</span>
+      </div>
+
+      <!-- Card 4 -->
+      <div class="proj-card reveal" data-cat="mobile" style="--c:#fb923c" data-delay="0.2">
+        <div class="proj-header">
+          <span class="proj-cat" style="color:#fb923c">Mobile</span>
+          <span class="proj-year">2023</span>
+        </div>
+        <h3 class="proj-title">TrailMate</h3>
+        <p class="proj-desc">Application de randonnée avec cartes offline, suivi GPS et partage de parcours communautaire.</p>
+        <div class="proj-tech">
+          <span>React Native</span><span>Mapbox</span><span>SQLite</span>
+        </div>
+        <span class="proj-arrow">↗</span>
+      </div>
+
+      <!-- Card 5 -->
+      <div class="proj-card reveal" data-cat="web" style="--c:#f472b6" data-delay="0.25">
+        <div class="proj-header">
+          <span class="proj-cat" style="color:#f472b6">Web App</span>
+          <div style="display:flex;flex-direction:column;align-items:flex-end;gap:4px">
+            <span class="proj-year">2022</span>
+            <span class="feat-badge">Sélectionné</span>
+          </div>
+        </div>
+        <h3 class="proj-title">CodeReview AI</h3>
+        <p class="proj-desc">Assistant de code review automatisé intégré à GitHub. Détecte bugs et suggère des refactorisations.</p>
+        <div class="proj-tech">
+          <span>Python</span><span>GitHub API</span><span>GPT-4</span>
+        </div>
+        <span class="proj-arrow">↗</span>
+      </div>
+
+      <!-- Card 6 -->
+      <div class="proj-card reveal" data-cat="dash" style="--c:#4ade80" data-delay="0.3">
+        <div class="proj-header">
+          <span class="proj-cat" style="color:#4ade80">Dashboard</span>
+          <span class="proj-year">2022</span>
+        </div>
+        <h3 class="proj-title">EcoTrack</h3>
+        <p class="proj-desc">Suivi de l'empreinte carbone d'une entreprise avec rapports mensuels et objectifs RSE.</p>
+        <div class="proj-tech">
+          <span>Vue.js</span><span>Chart.js</span><span>Django</span>
+        </div>
+        <span class="proj-arrow">↗</span>
+      </div>
+
+    </div>
+  </div>
+
+
+  <!-- ══ CONTACT ════════════════════════════════════ -->
+  <div class="divider"></div>
+  <div class="contact-wrap" id="contact">
+    <div class="contact-glow"></div>
+    <div class="container">
+      <div class="contact-grid">
+
+        <div class="reveal">
+          <p class="section-label">Contact</p>
+          <h2 class="contact-title">Travaillons<br><span>ensemble</span></h2>
+          <p class="contact-sub">Vous avez un projet en tête ? Parlons-en. Disponible pour du freelance et des opportunités en CDI.</p>
+          <a class="clink" href="mailto:alex.moreau@dev.fr">
+            <div class="clink-icon">✉</div>
+            <div><span class="clink-label">Email</span><span class="clink-val">alex.moreau@dev.fr</span></div>
+          </a>
+          <a class="clink" href="#">
+            <div class="clink-icon">⌥</div>
+            <div><span class="clink-label">GitHub</span><span class="clink-val">github.com/alexmoreau</span></div>
+          </a>
+          <a class="clink" href="#">
+            <div class="clink-icon">⊞</div>
+            <div><span class="clink-label">LinkedIn</span><span class="clink-val">linkedin.com/in/alexmoreau</span></div>
+          </a>
+        </div>
+
+        <div class="reveal" data-delay="0.2">
+          <form class="contact-form" id="contact-form">
+            <div class="form-row">
+              <div class="form-field">
+                <label class="form-label">Prénom</label>
+                <input class="form-input" type="text" placeholder="Jean" required />
+              </div>
+              <div class="form-field">
+                <label class="form-label">Nom</label>
+                <input class="form-input" type="text" placeholder="Dupont" required />
+              </div>
+            </div>
+            <div class="form-field">
+              <label class="form-label">Email</label>
+              <input class="form-input" type="email" placeholder="jean@exemple.fr" required />
+            </div>
+            <div class="form-field">
+              <label class="form-label">Sujet</label>
+              <input class="form-input" type="text" placeholder="Projet freelance, collaboration…" />
+            </div>
+            <div class="form-field">
+              <label class="form-label">Message</label>
+              <textarea class="form-textarea" rows="5" placeholder="Décrivez votre projet…" required></textarea>
+            </div>
+            <button class="btn-primary" type="submit" style="align-self:flex-start">Envoyer →</button>
+          </form>
+          <div class="form-success" id="form-success">
+            <span class="form-success-icon">✓</span>
+            <div class="form-success-title">Message envoyé !</div>
+            <div class="form-success-sub">Je vous réponds sous 24h. À bientôt !</div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+
+  <!-- ══ FOOTER ═════════════════════════════════════ -->
+  <footer>
+    <div class="footer-logo">Alex<span>.</span></div>
+    <span>Paris, France · 2024</span>
+    <div class="footer-links">
+      <a href="index.html">Accueil</a>
+      <a href="projects.html">Projets</a>
+      <a href="index.html#contact">Contact</a>
+    </div>
+  </footer>
+
+  <script src="main.js"></script>
+</body>
+</html>

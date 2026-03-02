@@ -1,0 +1,330 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Alex Moreau — Développeur Full-Stack</title>
+  <meta name="description" content="Portfolio d'Alex Moreau, développeur full-stack basé à Paris." />
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+  <!-- ══ NAVBAR ══════════════════════════════════ -->
+  <nav class="navbar" id="navbar">
+    <a class="nav-logo" href="index.html">Alex<span>.</span></a>
+    <ul class="nav-links">
+      <li><a href="index.html" class="active">Accueil</a></li>
+      <li><a href="#about">À propos</a></li>
+      <li><a href="#skills">Compétences</a></li>
+      <li><a href="projects.html">Projets</a></li>
+    </ul>
+    <a class="nav-cta" href="#contact">Me contacter</a>
+    <button class="nav-burger" id="burger" aria-label="Menu">
+      <span></span><span></span><span></span>
+    </button>
+  </nav>
+
+  <!-- Mobile menu -->
+  <div class="nav-mobile" id="nav-mobile">
+    <a href="index.html">Accueil</a>
+    <a href="#about">À propos</a>
+    <a href="#skills">Compétences</a>
+    <a href="projects.html">Projets</a>
+    <a class="nav-cta" href="#contact" style="align-self:flex-start">Me contacter</a>
+  </div>
+
+
+  <!-- ══ HERO ═════════════════════════════════════ -->
+  <section class="hero">
+    <div class="hero-blob hero-blob-1"></div>
+    <div class="hero-blob hero-blob-2"></div>
+    <div class="hero-grid-bg"></div>
+
+    <div class="container">
+      <div class="hero-inner">
+
+        <!-- Left -->
+        <div>
+          <div class="hero-eyebrow">Portfolio 2024</div>
+          <h1 class="hero-title">
+            Coder c'est<br>créer du<br>
+            <span class="cyan">futur</span><span class="dim">.</span>
+          </h1>
+          <p class="hero-sub">
+            Je construis des expériences numériques qui ont du sens — du design au déploiement.
+          </p>
+          <div class="hero-actions">
+            <a class="btn-primary" href="projects.html">Voir mes projets →</a>
+            <a class="btn-ghost"   href="#about">En savoir plus</a>
+          </div>
+        </div>
+
+        <!-- Right — profile card -->
+        <div class="hero-card">
+          <div class="hero-card-av">AM</div>
+          <div class="hero-card-name">Alex Moreau</div>
+          <div class="hero-card-role">Développeur Full-Stack</div>
+          <div class="hero-card-badge">Disponible — Freelance / CDI</div>
+          <div class="hero-card-stats">
+            <div><div class="stat-val">3<span>+</span></div><div class="stat-lbl">Années d'exp.</div></div>
+            <div><div class="stat-val">24</div>          <div class="stat-lbl">Projets livrés</div></div>
+            <div><div class="stat-val">12</div>          <div class="stat-lbl">Clients</div></div>
+            <div><div class="stat-val">99</div>          <div class="stat-lbl">Lighthouse</div></div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <div class="hero-scroll">
+      <div class="hero-scroll-line"></div>
+      Scroll
+    </div>
+  </section>
+
+  <div class="divider"></div>
+
+
+  <!-- ══ ABOUT ════════════════════════════════════ -->
+  <section id="about">
+    <div class="container">
+
+      <div class="reveal"><p class="section-label">À propos</p><h2 class="section-title">Qui suis-je ?</h2></div>
+
+      <div class="about-grid">
+        <div class="reveal" data-delay="0.1">
+          <blockquote class="about-quote">
+            « Le bon code, c'est comme le bon design — invisible quand ça marche. »
+          </blockquote>
+          <div style="display:flex;flex-direction:column;gap:10px;margin-top:24px">
+            <div style="display:flex;align-items:center;gap:12px;font-size:13.5px;color:var(--muted-2)">
+              <div style="width:32px;height:32px;border-radius:6px;background:var(--bg-3);border:1px solid var(--border);display:flex;align-items:center;justify-content:center;flex-shrink:0">📍</div>
+              Paris, France
+            </div>
+            <div style="display:flex;align-items:center;gap:12px;font-size:13.5px;color:var(--muted-2)">
+              <div style="width:32px;height:32px;border-radius:6px;background:var(--bg-3);border:1px solid var(--border);display:flex;align-items:center;justify-content:center;flex-shrink:0">✦</div>
+              Disponible — Freelance / CDI
+            </div>
+          </div>
+        </div>
+
+        <div class="reveal" data-delay="0.2">
+          <p class="about-body">
+            Passionné par l'intersection du code et du design, je crée des applications web soignées
+            avec une attention particulière à l'expérience utilisateur. Chaque projet est une opportunité
+            de repousser les limites techniques tout en gardant l'humain au centre.
+          </p>
+          <div class="about-info-grid">
+            <div class="about-info-card"><div class="about-info-label">Localisation</div><div class="about-info-value">Paris, France</div></div>
+            <div class="about-info-card"><div class="about-info-label">Statut</div><div class="about-info-value">Disponible</div></div>
+            <div class="about-info-card"><div class="about-info-label">Email</div><div class="about-info-value">alex.moreau@dev.fr</div></div>
+            <div class="about-info-card"><div class="about-info-label">GitHub</div><div class="about-info-value">github.com/alexmoreau</div></div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <div class="divider"></div>
+
+
+  <!-- ══ SKILLS ═══════════════════════════════════ -->
+  <div class="skills-wrap" id="skills">
+    <div class="skills-bg-txt">SKILLS</div>
+    <div class="container">
+
+      <div class="reveal"><p class="section-label">Compétences</p><h2 class="section-title">Ce que je maîtrise</h2></div>
+
+      <div class="skills-grid">
+
+        <div class="skill-card reveal" data-delay="0.05">
+          <span class="skill-icon">◈</span>
+          <div class="skill-cat">Front-end</div>
+          <div class="skill-tags">
+            <span class="skill-tag">React</span>
+            <span class="skill-tag">TypeScript</span>
+            <span class="skill-tag">Next.js</span>
+            <span class="skill-tag">Tailwind CSS</span>
+            <span class="skill-tag">Three.js</span>
+          </div>
+        </div>
+
+        <div class="skill-card reveal" data-delay="0.15">
+          <span class="skill-icon">◉</span>
+          <div class="skill-cat">Back-end</div>
+          <div class="skill-tags">
+            <span class="skill-tag">Node.js</span>
+            <span class="skill-tag">Python</span>
+            <span class="skill-tag">PostgreSQL</span>
+            <span class="skill-tag">REST API</span>
+            <span class="skill-tag">GraphQL</span>
+          </div>
+        </div>
+
+        <div class="skill-card reveal" data-delay="0.25">
+          <span class="skill-icon">◐</span>
+          <div class="skill-cat">Outils & DevOps</div>
+          <div class="skill-tags">
+            <span class="skill-tag">Git</span>
+            <span class="skill-tag">Docker</span>
+            <span class="skill-tag">Figma</span>
+            <span class="skill-tag">Vercel</span>
+            <span class="skill-tag">AWS</span>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+  <div class="divider"></div>
+
+
+  <!-- ══ TIMELINE ══════════════════════════════════ -->
+  <section>
+    <div class="container">
+      <div class="reveal"><p class="section-label">Parcours</p><h2 class="section-title">Mon chemin</h2></div>
+
+      <div class="tl-grid">
+
+        <!-- Expériences -->
+        <div class="reveal" data-delay="0.1">
+          <div class="tl-col-label">Expériences</div>
+
+          <div class="tl-item">
+            <div class="tl-dot-col"><div class="tl-dot"></div><div class="tl-line"></div></div>
+            <div>
+              <span class="tl-badge badge-work">Expérience</span>
+              <div class="tl-year">2024</div>
+              <div class="tl-role">Développeur Senior</div>
+              <div class="tl-place">Agence Pixel · Paris</div>
+              <div class="tl-desc">Lead front-end sur 8 projets clients. Migration vers Next.js 14 et mise en place d'un design system partagé.</div>
+            </div>
+          </div>
+
+          <div class="tl-item">
+            <div class="tl-dot-col"><div class="tl-dot"></div><div class="tl-line"></div></div>
+            <div>
+              <span class="tl-badge badge-work">Expérience</span>
+              <div class="tl-year">2022</div>
+              <div class="tl-role">Développeur Full-Stack</div>
+              <div class="tl-place">StartupX · Lyon</div>
+              <div class="tl-desc">Construction du MVP de A à Z. Stack React + FastAPI + PostgreSQL. Levée de fonds série A réussie.</div>
+            </div>
+          </div>
+
+        </div>
+
+        <!-- Formation -->
+        <div class="reveal" data-delay="0.2">
+          <div class="tl-col-label">Formation</div>
+
+          <div class="tl-item">
+            <div class="tl-dot-col"><div class="tl-dot"></div><div class="tl-line"></div></div>
+            <div>
+              <span class="tl-badge badge-edu">Formation</span>
+              <div class="tl-year">2021</div>
+              <div class="tl-role">Master Informatique</div>
+              <div class="tl-place">Université Paris-Saclay</div>
+              <div class="tl-desc">Spécialisation génie logiciel et systèmes distribués. Major de promotion.</div>
+            </div>
+          </div>
+
+          <div class="tl-item">
+            <div class="tl-dot-col"><div class="tl-dot"></div><div class="tl-line"></div></div>
+            <div>
+              <span class="tl-badge badge-edu">Formation</span>
+              <div class="tl-year">2019</div>
+              <div class="tl-role">Licence Informatique</div>
+              <div class="tl-place">IUT de Grenoble</div>
+              <div class="tl-desc">Bases solides en algorithmique, POO et bases de données relationnelles.</div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <div class="divider"></div>
+
+
+  <!-- ══ CONTACT ════════════════════════════════════ -->
+  <div class="contact-wrap" id="contact">
+    <div class="contact-glow"></div>
+    <div class="container">
+      <div class="contact-grid">
+
+        <div class="reveal">
+          <p class="section-label">Contact</p>
+          <h2 class="contact-title">Travaillons<br><span>ensemble</span></h2>
+          <p class="contact-sub">Vous avez un projet en tête ? Parlons-en. Je suis disponible pour des missions freelance et des opportunités en CDI.</p>
+
+          <a class="clink" href="mailto:alex.moreau@dev.fr">
+            <div class="clink-icon">✉</div>
+            <div><span class="clink-label">Email</span><span class="clink-val">alex.moreau@dev.fr</span></div>
+          </a>
+          <a class="clink" href="#">
+            <div class="clink-icon">⌥</div>
+            <div><span class="clink-label">GitHub</span><span class="clink-val">github.com/alexmoreau</span></div>
+          </a>
+          <a class="clink" href="#">
+            <div class="clink-icon">⊞</div>
+            <div><span class="clink-label">LinkedIn</span><span class="clink-val">linkedin.com/in/alexmoreau</span></div>
+          </a>
+        </div>
+
+        <div class="reveal" data-delay="0.2">
+          <form class="contact-form" id="contact-form">
+            <div class="form-row">
+              <div class="form-field">
+                <label class="form-label">Prénom</label>
+                <input class="form-input" type="text" placeholder="Jean" required />
+              </div>
+              <div class="form-field">
+                <label class="form-label">Nom</label>
+                <input class="form-input" type="text" placeholder="Dupont" required />
+              </div>
+            </div>
+            <div class="form-field">
+              <label class="form-label">Email</label>
+              <input class="form-input" type="email" placeholder="jean@exemple.fr" required />
+            </div>
+            <div class="form-field">
+              <label class="form-label">Sujet</label>
+              <input class="form-input" type="text" placeholder="Projet freelance, collaboration…" />
+            </div>
+            <div class="form-field">
+              <label class="form-label">Message</label>
+              <textarea class="form-textarea" rows="5" placeholder="Décrivez votre projet…" required></textarea>
+            </div>
+            <button class="btn-primary" type="submit" style="align-self:flex-start">Envoyer →</button>
+          </form>
+
+          <div class="form-success" id="form-success">
+            <span class="form-success-icon">✓</span>
+            <div class="form-success-title">Message envoyé !</div>
+            <div class="form-success-sub">Je vous réponds sous 24h. À bientôt !</div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+
+  <!-- ══ FOOTER ═════════════════════════════════════ -->
+  <footer>
+    <div class="footer-logo">Alex<span>.</span></div>
+    <span>Paris, France · 2024</span>
+    <div class="footer-links">
+      <a href="index.html">Accueil</a>
+      <a href="projects.html">Projets</a>
+      <a href="#contact">Contact</a>
+    </div>
+  </footer>
+
+  <script src="main.js"></script>
+</body>
+</html>
