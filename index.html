@@ -1,13 +1,22 @@
 <!DOCTYPE html>
 <html lang="fr">
+
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Antoine Vernay — Réseaux & Télécommunications</title>
-  <meta name="description" content="Portfolio d'Antoine Vernay, étudiant en BUT Réseaux & Télécommunications, alternant chez SFR — spécialisé en réseaux, supervision, systèmes et cybersécurité." />
+  <meta name="description"
+    content="Portfolio d'Antoine Vernay, étudiant en BUT Réseaux & Télécommunications, alternant chez SFR — spécialisé en réseaux, supervision, systèmes et cybersécurité." />
   <link rel="stylesheet" href="style.css" />
 </head>
+
 <body>
+
+  <!-- ══ PAGE LOADER ══════════════════════════════ -->
+  <div id="page-loader">
+    <div class="loader-ring"></div>
+    <div class="loader-logo">AV<span>.</span></div>
+  </div>
 
   <!-- ══ NAVBAR ══════════════════════════════════ -->
   <nav class="navbar" id="navbar">
@@ -53,11 +62,12 @@
             <span class="cyan">Backbone</span><span class="dim">.</span>
           </h1>
           <p class="hero-sub">
-            Étudiant en BUT Réseaux &amp; Télécommunications, alternant chez SFR sur la supervision du cœur de réseau. Je construis des compétences solides en infrastructures, monitoring et cybersécurité.
+            Étudiant en BUT Réseaux &amp; Télécommunications, alternant chez SFR à la supervision coeur backbone.
+            Je me spécialise dans la mise en place d'infrastructures robustes, avec une priorité absolue : la sécurité
           </p>
           <div class="hero-actions">
             <a class="btn-primary" href="projects.html">Voir mes projets →</a>
-            <a class="btn-ghost"   href="#about">En savoir plus</a>
+            <a class="btn-ghost" href="#about">En savoir plus</a>
           </div>
         </div>
 
@@ -66,12 +76,24 @@
           <div class="hero-card-av">AV</div>
           <div class="hero-card-name">Antoine Vernay</div>
           <div class="hero-card-role">Étudiant BUT RT · Alternant SFR</div>
-          <div class="hero-card-badge">En alternance · Supervision Backbone</div>
+          <div class="hero-card-badge">En alternance chez SFR </div>
           <div class="hero-card-stats">
-            <div><div class="stat-val">BUT<span> RT</span></div><div class="stat-lbl">Formation</div></div>
-            <div><div class="stat-val">SFR</div>         <div class="stat-lbl">Alternance</div></div>
-            <div><div class="stat-val">B2</div>          <div class="stat-lbl">Anglais</div></div>
-            <div><div class="stat-val" style="font-size:13px;letter-spacing:-0.5px">CSNA</div> <div class="stat-lbl">Stormshield</div></div>
+            <div>
+              <div class="stat-val">BUT<span> RT</span></div>
+              <div class="stat-lbl">Formation</div>
+            </div>
+            <div>
+              <div class="stat-val">SFR</div>
+              <div class="stat-lbl">Alternance</div>
+            </div>
+            <div>
+              <div class="stat-val">B2</div>
+              <div class="stat-lbl">Anglais</div>
+            </div>
+            <div>
+              <div class="stat-val" style="font-size:13px;letter-spacing:-0.5px">CSNA</div>
+              <div class="stat-lbl">Stormshield</div>
+            </div>
           </div>
         </div>
 
@@ -91,24 +113,34 @@
   <section id="about">
     <div class="container">
 
-      <div class="reveal"><p class="section-label">À propos</p><h2 class="section-title">Qui suis-je ?</h2></div>
+      <div class="reveal">
+        <p class="section-label">À propos</p>
+        <h2 class="section-title">Qui suis-je ?</h2>
+      </div>
 
       <div class="about-grid">
         <div class="reveal" data-delay="0.1">
           <blockquote class="about-quote">
-            « Comprendre comment les systèmes fonctionnent, résoudre des problèmes concrets — c'est ce qui me motive chaque jour. »
+            « Comprendre comment les systèmes fonctionnent, résoudre des problèmes concrets — c'est ce qui me motive
+            chaque jour. »
           </blockquote>
           <div style="display:flex;flex-direction:column;gap:10px;margin-top:24px">
             <div style="display:flex;align-items:center;gap:12px;font-size:13.5px;color:var(--muted-2)">
-              <div style="width:32px;height:32px;border-radius:6px;background:var(--bg-3);border:1px solid var(--border);display:flex;align-items:center;justify-content:center;flex-shrink:0">📍</div>
+              <div
+                style="width:32px;height:32px;border-radius:6px;background:var(--bg-3);border:1px solid var(--border);display:flex;align-items:center;justify-content:center;flex-shrink:0">
+                📍</div>
               Roanne / Bron, France
             </div>
             <div style="display:flex;align-items:center;gap:12px;font-size:13.5px;color:var(--muted-2)">
-              <div style="width:32px;height:32px;border-radius:6px;background:var(--bg-3);border:1px solid var(--border);display:flex;align-items:center;justify-content:center;flex-shrink:0">✦</div>
+              <div
+                style="width:32px;height:32px;border-radius:6px;background:var(--bg-3);border:1px solid var(--border);display:flex;align-items:center;justify-content:center;flex-shrink:0">
+                ✦</div>
               Alternant · Recherche Master
             </div>
             <div style="display:flex;align-items:center;gap:12px;font-size:13.5px;color:var(--muted-2)">
-              <div style="width:32px;height:32px;border-radius:6px;background:var(--bg-3);border:1px solid var(--border);display:flex;align-items:center;justify-content:center;flex-shrink:0">🎓</div>
+              <div
+                style="width:32px;height:32px;border-radius:6px;background:var(--bg-3);border:1px solid var(--border);display:flex;align-items:center;justify-content:center;flex-shrink:0">
+                🎓</div>
               BUT Réseaux &amp; Télécommunications — Roanne
             </div>
           </div>
@@ -116,15 +148,35 @@
 
         <div class="reveal" data-delay="0.2">
           <p class="about-body">
-            Étudiant en <strong>BUT Réseaux &amp; Télécommunications</strong> à Roanne, je développe une expertise concrète en infrastructures réseau, administration systèmes et supervision. Mon alternance chez <strong>SFR à Bron</strong> me permet d'évoluer au quotidien dans un environnement de production réel — supervision du backbone, gestion d'incidents fibre, continuité de service.
+            Étudiant en <strong>BUT Réseaux &amp; Télécommunications</strong> à Roanne, je développe une expertise
+            concrète en infrastructures réseau, administration systèmes et cybersécurité. Mon alternance chez
+            <strong>SFR
+              à Bron</strong> me permet d'évoluer au quotidien dans un environnement de production réel — supervision du
+            backbone, gestion d'incidents fibre, continuité de service.
             <br><br>
-            Rigoureux, analytique et orienté terrain, j'ai à cœur de comprendre les systèmes en profondeur plutôt que d'en rester à la surface. Certifié <strong>Stormshield Network Administrator</strong>, je construis progressivement un profil solide en cybersécurité réseau. Mon objectif : poursuivre en <strong>Master</strong> pour approfondir mes compétences et évoluer vers des fonctions à plus forte expertise technique.
+            Rigoureux, analytique et orienté terrain, j'ai à cœur de comprendre les systèmes en profondeur plutôt que
+            d'en rester à la surface. Certifié <strong>Stormshield Network Administrator</strong>, je construis
+            progressivement un profil solide en cybersécurité réseau. Mon objectif : poursuivre en
+            <strong>Master</strong> pour approfondir mes compétences et évoluer vers des fonctions à plus forte
+            expertise technique.
           </p>
           <div class="about-info-grid">
-            <div class="about-info-card"><div class="about-info-label">Formation</div><div class="about-info-value">BUT RT — Roanne</div></div>
-            <div class="about-info-card"><div class="about-info-label">Statut</div><div class="about-info-value">Alternant SFR</div></div>
-            <div class="about-info-card"><div class="about-info-label">Spécialité</div><div class="about-info-value">Réseaux · Supervision</div></div>
-            <div class="about-info-card"><div class="about-info-label">Objectif</div><div class="about-info-value">Poursuite en Master</div></div>
+            <div class="about-info-card">
+              <div class="about-info-label">Formation</div>
+              <div class="about-info-value">BUT RT — Roanne</div>
+            </div>
+            <div class="about-info-card">
+              <div class="about-info-label">Statut</div>
+              <div class="about-info-value">Alternant SFR</div>
+            </div>
+            <div class="about-info-card">
+              <div class="about-info-label">Spécialité</div>
+              <div class="about-info-value">Réseaux · Supervision</div>
+            </div>
+            <div class="about-info-card">
+              <div class="about-info-label">Objectif</div>
+              <div class="about-info-value">Poursuite en Master</div>
+            </div>
           </div>
         </div>
       </div>
@@ -140,9 +192,13 @@
     <div class="skills-bg-txt">SKILLS</div>
     <div class="container">
 
-      <div class="reveal"><p class="section-label">Compétences</p><h2 class="section-title">Ce que je maîtrise</h2></div>
+      <div class="reveal">
+        <p class="section-label">Compétences</p>
+        <h2 class="section-title">Ce que je maîtrise</h2>
+      </div>
 
-      <div class="skills-grid skills-grid-5">
+      <!-- Row 1 — 3 colonnes -->
+      <div class="skills-grid skills-grid-3">
 
         <div class="skill-card reveal" data-delay="0.05">
           <span class="skill-icon">◈</span>
@@ -185,6 +241,11 @@
           </div>
         </div>
 
+      </div>
+
+      <!-- Row 2 — 2 colonnes larges -->
+      <div class="skills-grid skills-grid-2">
+
         <div class="skill-card reveal" data-delay="0.26">
           <span class="skill-icon">◬</span>
           <div class="skill-cat">Cybersécurité</div>
@@ -194,6 +255,8 @@
             <span class="skill-tag">Filtrage réseau</span>
             <span class="skill-tag">Pare-feu / ACL</span>
             <span class="skill-tag">Wazuh / Splunk</span>
+            <span class="skill-tag">VPN SSL</span>
+            <span class="skill-tag">Active Directory</span>
             <span class="skill-tag">Pentesting (initiation)</span>
           </div>
         </div>
@@ -207,10 +270,12 @@
             <span class="skill-tag">VS Code</span>
             <span class="skill-tag">Architecture client/serveur</span>
             <span class="skill-tag">Base de données SQL</span>
+            <span class="skill-tag">Docker</span>
           </div>
         </div>
 
       </div>
+
     </div>
   </div>
 
@@ -220,7 +285,10 @@
   <!-- ══ TIMELINE ══════════════════════════════════ -->
   <section id="parcours">
     <div class="container">
-      <div class="reveal"><p class="section-label">Parcours</p><h2 class="section-title">Mon chemin</h2></div>
+      <div class="reveal">
+        <p class="section-label">Parcours</p>
+        <h2 class="section-title">Mon chemin</h2>
+      </div>
 
       <div class="tl-grid">
 
@@ -229,24 +297,34 @@
           <div class="tl-col-label">Expériences</div>
 
           <div class="tl-item">
-            <div class="tl-dot-col"><div class="tl-dot"></div><div class="tl-line"></div></div>
+            <div class="tl-dot-col">
+              <div class="tl-dot"></div>
+              <div class="tl-line"></div>
+            </div>
             <div>
               <span class="tl-badge badge-work">Alternance</span>
               <div class="tl-year">Fév. 2025 — Aujourd'hui</div>
               <div class="tl-role">Alternant — Supervision Réseau Backbone</div>
               <div class="tl-place">SFR · Bron</div>
-              <div class="tl-desc">Supervision du réseau cœur backbone, diagnostic et résolution d'incidents réseau, traitement des incidents fibre liés aux plaintes opérateurs. Rigueur opérationnelle dans un environnement de production 24/7 où la continuité de service est critique.</div>
+              <div class="tl-desc">Supervision du réseau cœur backbone, diagnostic et résolution d'incidents réseau,
+                traitement des incidents fibre liés aux plaintes opérateurs. Rigueur opérationnelle dans un
+                environnement de production 24/7 où la continuité de service est critique.</div>
             </div>
           </div>
 
           <div class="tl-item">
-            <div class="tl-dot-col"><div class="tl-dot"></div><div class="tl-line"></div></div>
+            <div class="tl-dot-col">
+              <div class="tl-dot"></div>
+              <div class="tl-line"></div>
+            </div>
             <div>
               <span class="tl-badge badge-work">Expérience</span>
               <div class="tl-year">Juil. 2023 · Juil. 2024</div>
               <div class="tl-role">Facteur</div>
               <div class="tl-place">La Poste · Montbrison</div>
-              <div class="tl-desc">Prise en main rapide des outils et processus internes. Respect strict des délais et des priorités de distribution. Sens de l'organisation et de la relation client dans un cadre professionnel exigeant.</div>
+              <div class="tl-desc">Prise en main rapide des outils et processus internes. Respect strict des délais et
+                des priorités de distribution. Sens de l'organisation et de la relation client dans un cadre
+                professionnel exigeant.</div>
             </div>
           </div>
 
@@ -257,29 +335,40 @@
           <div class="tl-col-label">Formation</div>
 
           <div class="tl-item">
-            <div class="tl-dot-col"><div class="tl-dot"></div><div class="tl-line"></div></div>
+            <div class="tl-dot-col">
+              <div class="tl-dot"></div>
+              <div class="tl-line"></div>
+            </div>
             <div>
               <span class="tl-badge badge-edu">En cours</span>
               <div class="tl-year">2023 — En cours</div>
               <div class="tl-role">BUT Réseaux &amp; Télécommunications</div>
               <div class="tl-place">IUT — Roanne</div>
-              <div class="tl-desc">Formation en alternance couvrant les architectures réseau, l'administration systèmes, la supervision, la téléphonie IP et les fondamentaux de la cybersécurité. Pratique intensive en environnement réel chez SFR.</div>
+              <div class="tl-desc">Formation en alternance couvrant les architectures réseau, l'administration systèmes,
+                la supervision, la téléphonie IP et les fondamentaux de la cybersécurité. Pratique intensive en
+                environnement réel chez SFR.</div>
             </div>
           </div>
 
           <div class="tl-item">
-            <div class="tl-dot-col"><div class="tl-dot"></div><div class="tl-line"></div></div>
+            <div class="tl-dot-col">
+              <div class="tl-dot"></div>
+              <div class="tl-line"></div>
+            </div>
             <div>
               <span class="tl-badge badge-edu">Formation</span>
               <div class="tl-year">2020 — 2023</div>
               <div class="tl-role">Bac STI2D — Option SIN</div>
               <div class="tl-place">Lycée Beauregard · Montbrison — Mention Assez Bien</div>
-              <div class="tl-desc">Systèmes d'Information et Numérique. Découverte des infrastructures numériques, des réseaux et de la programmation. Fondation technique ayant orienté mon choix vers le BUT RT.</div>
+              <div class="tl-desc">Systèmes d'Information et Numérique. Découverte des infrastructures numériques, des
+                réseaux et de la programmation. Fondation technique ayant orienté mon choix vers le BUT RT.</div>
             </div>
           </div>
 
           <div class="tl-item">
-            <div class="tl-dot-col"><div class="tl-dot"></div></div>
+            <div class="tl-dot-col">
+              <div class="tl-dot"></div>
+            </div>
             <div>
               <span class="tl-badge badge-edu">Formation</span>
               <div class="tl-year">2017 — 2020</div>
@@ -300,7 +389,10 @@
   <!-- ══ CERTIFICATION ═════════════════════════════ -->
   <section id="certification">
     <div class="container">
-      <div class="reveal"><p class="section-label">Certification</p><h2 class="section-title">Reconnaissance professionnelle</h2></div>
+      <div class="reveal">
+        <p class="section-label">Certification</p>
+        <h2 class="section-title">Reconnaissance professionnelle</h2>
+      </div>
 
       <div class="certif-grid reveal" data-delay="0.1">
         <div class="certif-card">
@@ -311,7 +403,10 @@
           <div class="certif-title">Certified Stormshield Network Administrator</div>
           <div class="certif-org">Stormshield · Organisme certificateur agréé ANSSI</div>
           <p class="certif-desc">
-            Certification professionnelle attestant de la maîtrise de la configuration, l'administration et la supervision des firewalls Stormshield. Couvre la politique de sécurité réseau, le filtrage applicatif, les règles ACL, la gestion des VPN et la supervision des équipements. Référence reconnue dans l'industrie de la cybersécurité française.
+            Certification professionnelle attestant de la maîtrise de la configuration, l'administration et la
+            supervision des firewalls Stormshield. Couvre la politique de sécurité réseau, le filtrage applicatif, les
+            règles ACL, la gestion des VPN et la supervision des équipements. Référence reconnue dans l'industrie de la
+            cybersécurité française.
           </p>
           <div class="certif-tags">
             <span class="skill-tag">Firewall</span>
@@ -327,14 +422,18 @@
             <div class="certif-info-icon">✦</div>
             <div>
               <div class="certif-info-label">Pourquoi cette certification ?</div>
-              <p class="certif-info-text">Stormshield est un acteur majeur de la cybersécurité en France, qualifié par l'ANSSI. Obtenir cette certification démontre une capacité concrète à sécuriser des infrastructures réseau dans un contexte professionnel réel.</p>
+              <p class="certif-info-text">Stormshield est un acteur majeur de la cybersécurité en France, qualifié par
+                l'ANSSI. Obtenir cette certification démontre une capacité concrète à sécuriser des infrastructures
+                réseau dans un contexte professionnel réel.</p>
             </div>
           </div>
           <div class="certif-info-card">
             <div class="certif-info-icon">◈</div>
             <div>
               <div class="certif-info-label">Complémentarité avec mon profil</div>
-              <p class="certif-info-text">Elle vient solidifier mon profil réseau d'une dimension cybersécurité concrète — essentielle dans les environnements opérateurs et d'entreprise où la sécurisation du périmètre est critique.</p>
+              <p class="certif-info-text">Elle vient solidifier mon profil réseau d'une dimension cybersécurité concrète
+                — essentielle dans les environnements opérateurs et d'entreprise où la sécurisation du périmètre est
+                critique.</p>
             </div>
           </div>
         </div>
@@ -348,28 +447,35 @@
   <!-- ══ VISION ════════════════════════════════════ -->
   <section id="vision">
     <div class="container">
-      <div class="reveal"><p class="section-label">Objectif</p><h2 class="section-title">Ma vision</h2></div>
+      <div class="reveal">
+        <p class="section-label">Objectif</p>
+        <h2 class="section-title">Ma vision</h2>
+      </div>
 
       <div class="vision-grid">
         <div class="reveal" data-delay="0.05">
           <div class="vision-card">
             <div class="vision-card-num">01</div>
             <div class="vision-card-title">Expertise réseau &amp; backbone</div>
-            <p class="vision-card-text">Approfondir ma maîtrise des architectures réseau complexes, de la supervision des infrastructures opérateurs et de la gestion des incidents en environnement de production.</p>
+            <p class="vision-card-text">Approfondir ma maîtrise des architectures réseau complexes, de la supervision
+              des infrastructures opérateurs et de la gestion des incidents en environnement de production.</p>
           </div>
         </div>
         <div class="reveal" data-delay="0.12">
           <div class="vision-card">
             <div class="vision-card-num">02</div>
             <div class="vision-card-title">Cybersécurité &amp; défense</div>
-            <p class="vision-card-text">Renforcer mes compétences en sécurité des infrastructures — SIEM, détection d'intrusion, sécurisation périmétrique — pour évoluer vers des profils à forte dimension cybersécurité.</p>
+            <p class="vision-card-text">Renforcer mes compétences en sécurité des infrastructures — SIEM, détection
+              d'intrusion, sécurisation périmétrique — pour évoluer vers des profils à forte dimension cybersécurité.
+            </p>
           </div>
         </div>
         <div class="reveal" data-delay="0.19">
           <div class="vision-card">
             <div class="vision-card-num">03</div>
             <div class="vision-card-title">Poursuite en Master</div>
-            <p class="vision-card-text">Intégrer un Master spécialisé en Réseaux, Systèmes ou Cybersécurité afin d'acquérir une expertise reconnue et d'évoluer vers des responsabilités techniques à plus fort impact.</p>
+            <p class="vision-card-text">Intégrer un Master spécialisé en Réseaux, Systèmes ou Cybersécurité afin
+              d'acquérir une expertise reconnue et d'évoluer vers des responsabilités techniques à plus fort impact.</p>
           </div>
         </div>
       </div>
@@ -388,19 +494,22 @@
         <div class="reveal">
           <p class="section-label">Contact</p>
           <h2 class="contact-title">Travaillons<br><span>ensemble</span></h2>
-          <p class="contact-sub">Recruteur, responsable pédagogique ou entreprise en recherche d'alternant ? N'hésitez pas à me contacter — je suis ouvert aux opportunités en alternance et aux candidatures Master.</p>
+          <p class="contact-sub">Recruteur, responsable pédagogique ou entreprise en recherche d'alternant ? N'hésitez
+            pas à me contacter — je suis ouvert aux opportunités en alternance et aux candidatures Master.</p>
 
           <a class="clink" href="mailto:antoine.vernay@etudiant.univ-roanne.fr">
             <div class="clink-icon">✉</div>
-            <div><span class="clink-label">Email</span><span class="clink-val">antoine.vernay@etudiant.univ-roanne.fr</span></div>
+            <div><span class="clink-label">Email</span><span
+                class="clink-val">antoine.vernay@etudiant.univ-roanne.fr</span></div>
           </a>
           <a class="clink" href="https://github.com/antoinVern" target="_blank" rel="noopener">
             <div class="clink-icon">⌥</div>
             <div><span class="clink-label">GitHub</span><span class="clink-val">github.com/antoinVern</span></div>
           </a>
-          <a class="clink" href="https://linkedin.com/in/antoine-vernay" target="_blank" rel="noopener">
+          <a class="clink" href="https://www.linkedin.com/in/antoine-vernay-8b4980339/" target="_blank" rel="noopener">
             <div class="clink-icon">⊞</div>
-            <div><span class="clink-label">LinkedIn</span><span class="clink-val">linkedin.com/in/antoine-vernay</span></div>
+            <div><span class="clink-label">LinkedIn</span><span class="clink-val">linkedin.com/in/antoine-vernay</span>
+            </div>
           </a>
         </div>
 
@@ -456,4 +565,5 @@
 
   <script src="main.js"></script>
 </body>
+
 </html>

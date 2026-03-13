@@ -25,6 +25,47 @@
 }
 
 /* ══════════════════════════════════════════
+   PAGE LOADER
+══════════════════════════════════════════ */
+#page-loader {
+  position: fixed;
+  inset: 0;
+  z-index: 9998;
+  background: var(--bg);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 20px;
+  transition: opacity .5s ease, visibility .5s ease;
+}
+#page-loader.hidden {
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+}
+.loader-logo {
+  font-family: var(--display);
+  font-size: 26px;
+  font-weight: 800;
+  color: var(--text);
+  letter-spacing: -1px;
+}
+.loader-logo span { color: var(--cyan); }
+
+.loader-ring {
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  border: 2px solid rgba(0, 212, 255, 0.12);
+  border-top-color: var(--cyan);
+  animation: loader-spin .75s linear infinite;
+}
+@keyframes loader-spin {
+  to { transform: rotate(360deg); }
+}
+
+/* ══════════════════════════════════════════
    RESET
 ══════════════════════════════════════════ */
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
@@ -546,9 +587,14 @@ blockquote.about-quote {
   gap: 24px;
   margin-top: 48px;
 }
-.skills-grid-5 {
-  grid-template-columns: repeat(5, 1fr);
-  gap: 18px;
+.skills-grid-3 {
+  grid-template-columns: repeat(3, 1fr);
+  gap: 20px;
+}
+.skills-grid-2 {
+  grid-template-columns: repeat(2, 1fr);
+  gap: 20px;
+  margin-top: 20px;
 }
 .skill-card {
   background: var(--bg-3);
@@ -838,6 +884,20 @@ blockquote.about-quote {
 .feat-badge { display: inline-flex; align-items: center; gap: 4px; font-size: 10px; letter-spacing: 1px; text-transform: uppercase; color: #facc15; font-weight: 600; }
 .feat-badge::before { content: '★'; font-size: 9px; }
 
+.proj-detail-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  margin-top: 18px;
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--c, var(--cyan));
+  text-decoration: none;
+  opacity: 0.8;
+  transition: opacity .2s, gap .2s;
+}
+.proj-detail-link:hover { opacity: 1; gap: 10px; }
+
 .proj-card[data-hidden="true"] { display: none; }
 
 /* ══════════════════════════════════════════
@@ -1010,7 +1070,8 @@ footer {
    RESPONSIVE
 ══════════════════════════════════════════ */
 @media (max-width: 1100px) {
-  .skills-grid-5 { grid-template-columns: repeat(3, 1fr); }
+  .skills-grid-3 { grid-template-columns: repeat(2, 1fr); }
+  .skills-grid-2 { grid-template-columns: repeat(2, 1fr); }
 }
 @media (max-width: 860px) {
   .container { padding: 0 24px; }
@@ -1025,7 +1086,7 @@ footer {
   .about-grid    { grid-template-columns: 1fr; gap: 40px; }
   .about-info-grid { grid-template-columns: 1fr; }
 
-  .skills-grid, .skills-grid-5 { grid-template-columns: 1fr 1fr; gap: 14px; }
+  .skills-grid, .skills-grid-3, .skills-grid-2 { grid-template-columns: 1fr 1fr; gap: 14px; }
   .skills-bg-txt { display: none; }
 
   .tl-grid       { grid-template-columns: 1fr; gap: 40px; }
@@ -1043,5 +1104,5 @@ footer {
 }
 @media (max-width: 600px) {
   .hero-title { letter-spacing: -1.5px; }
-  .proj-grid, .skills-grid-5, .skills-grid { grid-template-columns: 1fr; }
+  .proj-grid, .skills-grid-3, .skills-grid-2, .skills-grid { grid-template-columns: 1fr; }
 }

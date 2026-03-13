@@ -8,6 +8,19 @@
 
 document.addEventListener('DOMContentLoaded', () => {
 
+  /* ── PAGE LOADER ─────────────────────── */
+  const loader = document.getElementById('page-loader');
+  if (loader) {
+    const hide = () => {
+      setTimeout(() => loader.classList.add('hidden'), 120);
+    };
+    if (document.readyState === 'complete') {
+      hide();
+    } else {
+      window.addEventListener('load', hide, { once: true });
+    }
+  }
+
   /* ── NAVBAR SCROLL ───────────────────── */
   const navbar = document.querySelector('.navbar');
   if (navbar) {

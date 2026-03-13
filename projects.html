@@ -9,6 +9,12 @@
 </head>
 <body>
 
+  <!-- ══ PAGE LOADER ══════════════════════════════ -->
+  <div id="page-loader">
+    <div class="loader-ring"></div>
+    <div class="loader-logo">AV<span>.</span></div>
+  </div>
+
   <!-- ══ NAVBAR ══════════════════════════════════ -->
   <nav class="navbar" id="navbar">
     <a class="nav-logo" href="index.html">AV<span>.</span></a>
@@ -52,10 +58,7 @@
       <!-- Filters -->
       <div class="filters reveal" data-delay="0.15">
         <button class="filter-btn active" data-cat="all">Tous</button>
-        <button class="filter-btn" data-cat="reseau">Réseaux <span style="opacity:.6">(2)</span></button>
-        <button class="filter-btn" data-cat="supervision">Supervision <span style="opacity:.6">(1)</span></button>
-        <button class="filter-btn" data-cat="secu">Cybersécurité <span style="opacity:.6">(1)</span></button>
-        <button class="filter-btn" data-cat="dev">Développement <span style="opacity:.6">(1)</span></button>
+        <button class="filter-btn" data-cat="secu">Cybersécurité <span style="opacity:.6">(2)</span></button>
       </div>
 
     </div>
@@ -66,85 +69,42 @@
   <div class="container">
     <div class="proj-grid">
 
-      <!-- Card 1 — Supervision SFR (Alternance) -->
-      <div class="proj-card reveal" data-cat="supervision" style="--c:#00d4ff" data-delay="0.05">
+      <!-- Card 1 — Infrastructure DGFIP -->
+      <div class="proj-card reveal" data-cat="secu" style="--c:#f59e0b" data-delay="0.05">
         <div class="proj-header">
-          <span class="proj-cat" style="color:#00d4ff">Supervision</span>
+          <span class="proj-cat" style="color:#f59e0b">Cybersécurité</span>
           <div style="display:flex;flex-direction:column;align-items:flex-end;gap:4px">
             <span class="proj-year">2025</span>
-            <span class="feat-badge">Alternance SFR</span>
+            <span class="feat-badge" style="background:rgba(245,158,11,.12);border-color:rgba(245,158,11,.3);color:#f59e0b">Pentest · SAÉ</span>
           </div>
         </div>
-        <h3 class="proj-title">Supervision Réseau Backbone</h3>
+        <h3 class="proj-title">Infrastructure DGFIP — Simulation d'Infiltration</h3>
         <p class="proj-desc">
-          Dans le cadre de mon alternance chez SFR, participation à la supervision opérationnelle du réseau cœur backbone. Analyse et traitement d'incidents réseau et fibre en temps réel, coordination avec les équipes techniques, suivi du planning d'interventions. Travail dans un environnement de production 24/7 exigeant réactivité et rigueur.
+          Simulation complète d'une antenne départementale de la DGFIP : architecture multi-services (Apache Tomcat, Bind9, Samba, Active Directory), pare-feu Stormshield, VPN SSL et supervision Splunk. Exploitation d'une chaîne d'attaque réaliste : Log4Shell (CVE-2021-44228), pivot réseau via Metasploit/Meterpreter et compromission du domaine par ZeroLogon (CVE-2020-1472).
         </p>
         <div class="proj-tech">
-          <span>Monitoring</span><span>Backbone</span><span>Fibre</span><span>Gestion d'incidents</span>
+          <span>Log4Shell</span><span>ZeroLogon</span><span>Metasploit</span><span>Stormshield</span><span>Splunk</span><span>Active Directory</span>
         </div>
+        <a href="project-dgfip.html" class="proj-detail-link">Voir le détail →</a>
       </div>
 
-      <!-- Card 2 — Infra Lab Réseau -->
-      <div class="proj-card reveal" data-cat="reseau" style="--c:#a78bfa" data-delay="0.1">
+      <!-- Card 2 — Chronos Pentest -->
+      <div class="proj-card reveal" data-cat="secu" style="--c:#a78bfa" data-delay="0.1">
         <div class="proj-header">
-          <span class="proj-cat" style="color:#a78bfa">Réseaux</span>
-          <span class="proj-year">2024</span>
-        </div>
-        <h3 class="proj-title">Infrastructure Réseau — Lab Complet</h3>
-        <p class="proj-desc">
-          Conception et déploiement d'une infrastructure réseau complète en environnement virtualisé. Mise en place du routage OSPF, segmentation VLAN, configuration DNS/DHCP, déploiement de services (Web, FTP) sous Linux Debian. Validation de la connectivité inter-VLAN et des ACL de filtrage.
-        </p>
-        <div class="proj-tech">
-          <span>OSPF</span><span>VLAN</span><span>DNS/DHCP</span><span>Linux</span><span>VirtualBox</span>
-        </div>
-      </div>
-
-      <!-- Card 3 — Stormshield / Sécurité périmétrique -->
-      <div class="proj-card reveal" data-cat="secu" style="--c:#34d399" data-delay="0.15">
-        <div class="proj-header">
-          <span class="proj-cat" style="color:#34d399">Cybersécurité</span>
+          <span class="proj-cat" style="color:#a78bfa">Cybersécurité</span>
           <div style="display:flex;flex-direction:column;align-items:flex-end;gap:4px">
-            <span class="proj-year">2025</span>
-            <span class="feat-badge">Certifié CSNA</span>
+            <span class="proj-year">Jan. 2025</span>
+            <span class="feat-badge" style="background:rgba(167,139,250,.12);border-color:rgba(167,139,250,.3);color:#a78bfa">VulnHub · SAÉ 3.04</span>
           </div>
         </div>
-        <h3 class="proj-title">Sécurisation Périmétrique — Stormshield</h3>
+        <h3 class="proj-title">Pentest — Machine Chronos</h3>
         <p class="proj-desc">
-          Configuration et administration d'un pare-feu Stormshield SNS dans le cadre de la préparation à la certification CSNA. Mise en place de politiques de sécurité réseau, règles de filtrage applicatif, ACL, tunnels VPN et supervision des événements de sécurité. Certification obtenue avec validité 2025-2028.
+          Test de pénétration complet sur la VM Chronos (VulnHub, niveau Medium). Reconnaissance réseau, injection de commandes via un paramètre encodé en Base58, reverse shell, escalade de privilèges via <code style="color:#a78bfa;font-size:12px">express-fileupload</code> et sudo node. Flags utilisateur et root obtenus.
         </p>
         <div class="proj-tech">
-          <span>Stormshield SNS</span><span>Firewall</span><span>VPN</span><span>ACL</span><span>SIEM</span>
+          <span>nmap</span><span>Burp Suite</span><span>Reverse Shell</span><span>Base58</span><span>Node.js</span><span>GTFOBins</span>
         </div>
-      </div>
-
-      <!-- Card 4 — Symfony habvbibli -->
-      <div class="proj-card reveal" data-cat="dev" style="--c:#fb923c" data-delay="0.2">
-        <div class="proj-header">
-          <span class="proj-cat" style="color:#fb923c">Développement</span>
-          <span class="proj-year">2024</span>
-        </div>
-        <h3 class="proj-title">Application Web — Symfony &amp; habvbibli</h3>
-        <p class="proj-desc">
-          Développement d'une application web complète sous Symfony avec base de données relationnelle (habvbibli). Hébergement du serveur en local via WAMP Server sur poste personnel, accessible depuis un second poste sur le même réseau — démontrant une maîtrise concrète de la logique client/serveur et de l'accessibilité réseau en environnement local.
-        </p>
-        <div class="proj-tech">
-          <span>Symfony</span><span>WAMP Server</span><span>MySQL</span><span>Client/Serveur</span><span>VS Code</span>
-        </div>
-      </div>
-
-      <!-- Card 5 — Architecture réseau VLAN -->
-      <div class="proj-card reveal" data-cat="reseau" style="--c:#f472b6" data-delay="0.25">
-        <div class="proj-header">
-          <span class="proj-cat" style="color:#f472b6">Réseaux</span>
-          <span class="proj-year">2024</span>
-        </div>
-        <h3 class="proj-title">Architecture Multi-VLAN &amp; Wi-Fi UniFi</h3>
-        <p class="proj-desc">
-          Déploiement d'une architecture réseau segmentée avec gestion multi-VLAN et administration du réseau Wi-Fi via le contrôleur UniFi. Isolation des flux par profil utilisateur, configuration des points d'accès, supervision des connexions et analyse du trafic. Approche orientée sécurité et performance.
-        </p>
-        <div class="proj-tech">
-          <span>VLAN</span><span>UniFi Controller</span><span>Wi-Fi</span><span>Analyse de trafic</span>
-        </div>
+        <a href="project-chronos.html" class="proj-detail-link">Voir le détail →</a>
       </div>
 
     </div>
