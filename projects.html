@@ -3,19 +3,20 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Projets — Alex Moreau</title>
-  <meta name="description" content="Tous les projets de Alex Moreau, développeur full-stack." />
+  <title>Projets — Antoine Vernay</title>
+  <meta name="description" content="Projets techniques d'Antoine Vernay — réseaux, supervision, cybersécurité et développement." />
   <link rel="stylesheet" href="style.css" />
 </head>
 <body>
 
   <!-- ══ NAVBAR ══════════════════════════════════ -->
   <nav class="navbar" id="navbar">
-    <a class="nav-logo" href="index.html">Alex<span>.</span></a>
+    <a class="nav-logo" href="index.html">AV<span>.</span></a>
     <ul class="nav-links">
       <li><a href="index.html">Accueil</a></li>
       <li><a href="index.html#about">À propos</a></li>
       <li><a href="index.html#skills">Compétences</a></li>
+      <li><a href="index.html#parcours">Parcours</a></li>
       <li><a href="projects.html" class="active">Projets</a></li>
     </ul>
     <a class="nav-cta" href="index.html#contact">Me contacter</a>
@@ -29,6 +30,7 @@
     <a href="index.html">Accueil</a>
     <a href="index.html#about">À propos</a>
     <a href="index.html#skills">Compétences</a>
+    <a href="index.html#parcours">Parcours</a>
     <a href="projects.html">Projets</a>
     <a class="nav-cta" href="index.html#contact" style="align-self:flex-start">Me contacter</a>
   </div>
@@ -40,20 +42,20 @@
     <div class="container">
 
       <div class="reveal">
-        <p class="section-label">Portfolio</p>
+        <p class="section-label">Portfolio Technique</p>
         <h1 class="section-title">Mes Projets</h1>
-        <p style="font-size:15px;color:var(--muted-2);margin-top:14px;line-height:1.8;max-width:500px">
-          Une sélection de travaux réalisés ces 3 dernières années — du MVP au produit en production.
+        <p style="font-size:15px;color:var(--muted-2);margin-top:14px;line-height:1.8;max-width:560px">
+          Projets réalisés en formation, en alternance et en autonomie — alliant réseaux, supervision, cybersécurité et développement. Chaque projet reflète une mise en situation technique concrète.
         </p>
       </div>
 
       <!-- Filters -->
       <div class="filters reveal" data-delay="0.15">
         <button class="filter-btn active" data-cat="all">Tous</button>
-        <button class="filter-btn" data-cat="web">Web App <span style="opacity:.6">(2)</span></button>
-        <button class="filter-btn" data-cat="ecom">E-commerce <span style="opacity:.6">(1)</span></button>
-        <button class="filter-btn" data-cat="dash">Dashboard <span style="opacity:.6">(2)</span></button>
-        <button class="filter-btn" data-cat="mobile">Mobile <span style="opacity:.6">(1)</span></button>
+        <button class="filter-btn" data-cat="reseau">Réseaux <span style="opacity:.6">(2)</span></button>
+        <button class="filter-btn" data-cat="supervision">Supervision <span style="opacity:.6">(1)</span></button>
+        <button class="filter-btn" data-cat="secu">Cybersécurité <span style="opacity:.6">(1)</span></button>
+        <button class="filter-btn" data-cat="dev">Développement <span style="opacity:.6">(1)</span></button>
       </div>
 
     </div>
@@ -64,97 +66,85 @@
   <div class="container">
     <div class="proj-grid">
 
-      <!-- Card 1 -->
-      <div class="proj-card reveal" data-cat="web" style="--c:#00d4ff" data-delay="0.05">
+      <!-- Card 1 — Supervision SFR (Alternance) -->
+      <div class="proj-card reveal" data-cat="supervision" style="--c:#00d4ff" data-delay="0.05">
         <div class="proj-header">
-          <span class="proj-cat" style="color:#00d4ff">Web App</span>
+          <span class="proj-cat" style="color:#00d4ff">Supervision</span>
           <div style="display:flex;flex-direction:column;align-items:flex-end;gap:4px">
-            <span class="proj-year">2024</span>
-            <span class="feat-badge">Sélectionné</span>
+            <span class="proj-year">2025</span>
+            <span class="feat-badge">Alternance SFR</span>
           </div>
         </div>
-        <h3 class="proj-title">Palette Studio</h3>
-        <p class="proj-desc">Outil de génération de palettes avec IA. Export vers Figma, CSS et Tailwind en un clic.</p>
+        <h3 class="proj-title">Supervision Réseau Backbone</h3>
+        <p class="proj-desc">
+          Dans le cadre de mon alternance chez SFR, participation à la supervision opérationnelle du réseau cœur backbone. Analyse et traitement d'incidents réseau et fibre en temps réel, coordination avec les équipes techniques, suivi du planning d'interventions. Travail dans un environnement de production 24/7 exigeant réactivité et rigueur.
+        </p>
         <div class="proj-tech">
-          <span>React</span><span>OpenAI API</span><span>Node.js</span>
+          <span>Monitoring</span><span>Backbone</span><span>Fibre</span><span>Gestion d'incidents</span>
         </div>
-        <span class="proj-arrow">↗</span>
       </div>
 
-      <!-- Card 2 -->
-      <div class="proj-card reveal" data-cat="ecom" style="--c:#a78bfa" data-delay="0.1">
+      <!-- Card 2 — Infra Lab Réseau -->
+      <div class="proj-card reveal" data-cat="reseau" style="--c:#a78bfa" data-delay="0.1">
         <div class="proj-header">
-          <span class="proj-cat" style="color:#a78bfa">E-commerce</span>
+          <span class="proj-cat" style="color:#a78bfa">Réseaux</span>
+          <span class="proj-year">2024</span>
+        </div>
+        <h3 class="proj-title">Infrastructure Réseau — Lab Complet</h3>
+        <p class="proj-desc">
+          Conception et déploiement d'une infrastructure réseau complète en environnement virtualisé. Mise en place du routage OSPF, segmentation VLAN, configuration DNS/DHCP, déploiement de services (Web, FTP) sous Linux Debian. Validation de la connectivité inter-VLAN et des ACL de filtrage.
+        </p>
+        <div class="proj-tech">
+          <span>OSPF</span><span>VLAN</span><span>DNS/DHCP</span><span>Linux</span><span>VirtualBox</span>
+        </div>
+      </div>
+
+      <!-- Card 3 — Stormshield / Sécurité périmétrique -->
+      <div class="proj-card reveal" data-cat="secu" style="--c:#34d399" data-delay="0.15">
+        <div class="proj-header">
+          <span class="proj-cat" style="color:#34d399">Cybersécurité</span>
           <div style="display:flex;flex-direction:column;align-items:flex-end;gap:4px">
-            <span class="proj-year">2024</span>
-            <span class="feat-badge">Sélectionné</span>
+            <span class="proj-year">2025</span>
+            <span class="feat-badge">Certifié CSNA</span>
           </div>
         </div>
-        <h3 class="proj-title">Maison Blanche</h3>
-        <p class="proj-desc">Boutique haut de gamme pour une marque de mobilier. SSR, SEO optimisé, score Lighthouse 99.</p>
+        <h3 class="proj-title">Sécurisation Périmétrique — Stormshield</h3>
+        <p class="proj-desc">
+          Configuration et administration d'un pare-feu Stormshield SNS dans le cadre de la préparation à la certification CSNA. Mise en place de politiques de sécurité réseau, règles de filtrage applicatif, ACL, tunnels VPN et supervision des événements de sécurité. Certification obtenue avec validité 2025-2028.
+        </p>
         <div class="proj-tech">
-          <span>Next.js</span><span>Stripe</span><span>Sanity CMS</span>
+          <span>Stormshield SNS</span><span>Firewall</span><span>VPN</span><span>ACL</span><span>SIEM</span>
         </div>
-        <span class="proj-arrow">↗</span>
       </div>
 
-      <!-- Card 3 -->
-      <div class="proj-card reveal" data-cat="dash" style="--c:#34d399" data-delay="0.15">
+      <!-- Card 4 — Symfony habvbibli -->
+      <div class="proj-card reveal" data-cat="dev" style="--c:#fb923c" data-delay="0.2">
         <div class="proj-header">
-          <span class="proj-cat" style="color:#34d399">Dashboard</span>
-          <span class="proj-year">2023</span>
+          <span class="proj-cat" style="color:#fb923c">Développement</span>
+          <span class="proj-year">2024</span>
         </div>
-        <h3 class="proj-title">AnalytiX</h3>
-        <p class="proj-desc">Dashboard temps réel pour équipes marketing. Visualisation de données et exports PDF automatisés.</p>
+        <h3 class="proj-title">Application Web — Symfony &amp; habvbibli</h3>
+        <p class="proj-desc">
+          Développement d'une application web complète sous Symfony avec base de données relationnelle (habvbibli). Hébergement du serveur en local via WAMP Server sur poste personnel, accessible depuis un second poste sur le même réseau — démontrant une maîtrise concrète de la logique client/serveur et de l'accessibilité réseau en environnement local.
+        </p>
         <div class="proj-tech">
-          <span>React</span><span>D3.js</span><span>FastAPI</span><span>PostgreSQL</span>
+          <span>Symfony</span><span>WAMP Server</span><span>MySQL</span><span>Client/Serveur</span><span>VS Code</span>
         </div>
-        <span class="proj-arrow">↗</span>
       </div>
 
-      <!-- Card 4 -->
-      <div class="proj-card reveal" data-cat="mobile" style="--c:#fb923c" data-delay="0.2">
+      <!-- Card 5 — Architecture réseau VLAN -->
+      <div class="proj-card reveal" data-cat="reseau" style="--c:#f472b6" data-delay="0.25">
         <div class="proj-header">
-          <span class="proj-cat" style="color:#fb923c">Mobile</span>
-          <span class="proj-year">2023</span>
+          <span class="proj-cat" style="color:#f472b6">Réseaux</span>
+          <span class="proj-year">2024</span>
         </div>
-        <h3 class="proj-title">TrailMate</h3>
-        <p class="proj-desc">Application de randonnée avec cartes offline, suivi GPS et partage de parcours communautaire.</p>
+        <h3 class="proj-title">Architecture Multi-VLAN &amp; Wi-Fi UniFi</h3>
+        <p class="proj-desc">
+          Déploiement d'une architecture réseau segmentée avec gestion multi-VLAN et administration du réseau Wi-Fi via le contrôleur UniFi. Isolation des flux par profil utilisateur, configuration des points d'accès, supervision des connexions et analyse du trafic. Approche orientée sécurité et performance.
+        </p>
         <div class="proj-tech">
-          <span>React Native</span><span>Mapbox</span><span>SQLite</span>
+          <span>VLAN</span><span>UniFi Controller</span><span>Wi-Fi</span><span>Analyse de trafic</span>
         </div>
-        <span class="proj-arrow">↗</span>
-      </div>
-
-      <!-- Card 5 -->
-      <div class="proj-card reveal" data-cat="web" style="--c:#f472b6" data-delay="0.25">
-        <div class="proj-header">
-          <span class="proj-cat" style="color:#f472b6">Web App</span>
-          <div style="display:flex;flex-direction:column;align-items:flex-end;gap:4px">
-            <span class="proj-year">2022</span>
-            <span class="feat-badge">Sélectionné</span>
-          </div>
-        </div>
-        <h3 class="proj-title">CodeReview AI</h3>
-        <p class="proj-desc">Assistant de code review automatisé intégré à GitHub. Détecte bugs et suggère des refactorisations.</p>
-        <div class="proj-tech">
-          <span>Python</span><span>GitHub API</span><span>GPT-4</span>
-        </div>
-        <span class="proj-arrow">↗</span>
-      </div>
-
-      <!-- Card 6 -->
-      <div class="proj-card reveal" data-cat="dash" style="--c:#4ade80" data-delay="0.3">
-        <div class="proj-header">
-          <span class="proj-cat" style="color:#4ade80">Dashboard</span>
-          <span class="proj-year">2022</span>
-        </div>
-        <h3 class="proj-title">EcoTrack</h3>
-        <p class="proj-desc">Suivi de l'empreinte carbone d'une entreprise avec rapports mensuels et objectifs RSE.</p>
-        <div class="proj-tech">
-          <span>Vue.js</span><span>Chart.js</span><span>Django</span>
-        </div>
-        <span class="proj-arrow">↗</span>
       </div>
 
     </div>
@@ -171,18 +161,18 @@
         <div class="reveal">
           <p class="section-label">Contact</p>
           <h2 class="contact-title">Travaillons<br><span>ensemble</span></h2>
-          <p class="contact-sub">Vous avez un projet en tête ? Parlons-en. Disponible pour du freelance et des opportunités en CDI.</p>
-          <a class="clink" href="mailto:alex.moreau@dev.fr">
+          <p class="contact-sub">Recruteur, responsable pédagogique ou entreprise en recherche d'alternant ? Je suis disponible pour des opportunités en alternance et des candidatures Master.</p>
+          <a class="clink" href="mailto:antoine.vernay@etudiant.univ-roanne.fr">
             <div class="clink-icon">✉</div>
-            <div><span class="clink-label">Email</span><span class="clink-val">alex.moreau@dev.fr</span></div>
+            <div><span class="clink-label">Email</span><span class="clink-val">antoine.vernay@etudiant.univ-roanne.fr</span></div>
           </a>
-          <a class="clink" href="#">
+          <a class="clink" href="https://github.com/antoinVern" target="_blank" rel="noopener">
             <div class="clink-icon">⌥</div>
-            <div><span class="clink-label">GitHub</span><span class="clink-val">github.com/alexmoreau</span></div>
+            <div><span class="clink-label">GitHub</span><span class="clink-val">github.com/antoinVern</span></div>
           </a>
-          <a class="clink" href="#">
+          <a class="clink" href="https://linkedin.com/in/antoine-vernay" target="_blank" rel="noopener">
             <div class="clink-icon">⊞</div>
-            <div><span class="clink-label">LinkedIn</span><span class="clink-val">linkedin.com/in/alexmoreau</span></div>
+            <div><span class="clink-label">LinkedIn</span><span class="clink-val">linkedin.com/in/antoine-vernay</span></div>
           </a>
         </div>
 
@@ -204,11 +194,11 @@
             </div>
             <div class="form-field">
               <label class="form-label">Sujet</label>
-              <input class="form-input" type="text" placeholder="Projet freelance, collaboration…" />
+              <input class="form-input" type="text" placeholder="Alternance, Master, collaboration…" />
             </div>
             <div class="form-field">
               <label class="form-label">Message</label>
-              <textarea class="form-textarea" rows="5" placeholder="Décrivez votre projet…" required></textarea>
+              <textarea class="form-textarea" rows="5" placeholder="Décrivez votre demande…" required></textarea>
             </div>
             <button class="btn-primary" type="submit" style="align-self:flex-start">Envoyer →</button>
           </form>
@@ -226,8 +216,8 @@
 
   <!-- ══ FOOTER ═════════════════════════════════════ -->
   <footer>
-    <div class="footer-logo">Alex<span>.</span></div>
-    <span>Paris, France · 2024</span>
+    <div class="footer-logo">Antoine<span>.</span></div>
+    <span>Roanne / Bron · 2026</span>
     <div class="footer-links">
       <a href="index.html">Accueil</a>
       <a href="projects.html">Projets</a>
