@@ -1,0 +1,577 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Application Android TCP — SAÉ 3.02 — Antoine Vernay</title>
+  <meta name="description" content="SAÉ 3.02 — Application mobile Android développée en Java permettant des communications TCP/IP client-serveur avec multithreading et interface graphique." />
+  <link rel="stylesheet" href="style.css" />
+  <style>
+    .detail-hero {
+      padding: calc(var(--nav-h) + 64px) 0 64px;
+      position: relative;
+      overflow: hidden;
+    }
+    .detail-hero-blob {
+      position: absolute;
+      width: 700px; height: 400px;
+      border-radius: 50%;
+      background: radial-gradient(ellipse, rgba(99,102,241,.07) 0%, transparent 70%);
+      top: -60px; right: -200px;
+      pointer-events: none;
+    }
+    .detail-back { display: inline-flex; align-items: center; gap: 8px; font-size: 13px; color: var(--muted-2); text-decoration: none; margin-bottom: 28px; transition: color .2s; }
+    .detail-back:hover { color: var(--text); }
+    .detail-meta { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; margin-bottom: 18px; }
+    .detail-cat { font-size: 10px; letter-spacing: 3px; text-transform: uppercase; font-weight: 600; padding: 3px 11px; border-radius: 3px; }
+    .detail-year { font-size: 12px; color: var(--muted); }
+    .detail-title { font-family: var(--display); font-size: clamp(28px, 3.8vw, 52px); font-weight: 800; line-height: 1.06; letter-spacing: -2px; margin-bottom: 20px; }
+    .detail-title .indigo { color: #6366f1; }
+    .detail-subtitle { font-size: 16px; color: var(--muted-2); line-height: 1.8; max-width: 640px; margin-bottom: 36px; }
+    .detail-tags { display: flex; flex-wrap: wrap; gap: 8px; }
+    .detail-tag { font-size: 12px; padding: 5px 13px; background: var(--bg-3); border: 1px solid var(--border); border-radius: 20px; color: var(--muted-2); }
+
+    .detail-body { display: grid; grid-template-columns: 1fr 280px; gap: 56px; align-items: start; padding-bottom: 96px; }
+    .detail-main { min-width: 0; }
+    .detail-sidebar { position: sticky; top: calc(var(--nav-h) + 24px); }
+
+    .detail-section { margin-bottom: 52px; }
+    .detail-section-label { font-size: 10px; letter-spacing: 4px; text-transform: uppercase; color: #6366f1; font-weight: 600; margin-bottom: 12px; }
+    .detail-section-title { font-family: var(--display); font-size: 22px; font-weight: 800; letter-spacing: -.5px; margin-bottom: 18px; padding-bottom: 14px; border-bottom: 1px solid var(--border); }
+    .detail-text { font-size: 14.5px; color: var(--muted-2); line-height: 1.85; margin-bottom: 16px; }
+    .detail-text strong { color: var(--text); font-weight: 600; }
+
+    /* ── Step cards ── */
+    .step { background: var(--bg-2); border: 1px solid var(--border); border-radius: 10px; padding: 22px; margin-bottom: 14px; transition: border-color .25s; }
+    .step:hover { border-color: rgba(99,102,241,.3); }
+    .step-header { display: flex; align-items: center; gap: 12px; margin-bottom: 12px; }
+    .step-num { width: 28px; height: 28px; border-radius: 50%; background: rgba(99,102,241,.1); border: 2px solid rgba(99,102,241,.4); color: #6366f1; font-size: 12px; font-weight: 700; font-family: var(--display); display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+    .step-title { font-family: var(--display); font-size: 15px; font-weight: 700; }
+    .step-desc { font-size: 13.5px; color: var(--muted-2); line-height: 1.75; }
+    .step-desc strong { color: var(--text); }
+
+    /* ── Code block ── */
+    .code-block { background: #0a0e14; border: 1px solid var(--border); border-radius: 8px; padding: 16px 20px; font-family: 'Courier New', monospace; font-size: 13px; color: #a5b4fc; line-height: 1.65; overflow-x: auto; margin: 12px 0; }
+    .code-block .cm { color: #4a5568; }
+    .code-block .kw { color: #6366f1; }
+    .code-block .val { color: #00d4ff; }
+    .code-block .str { color: #f59e0b; }
+    .code-block .grn { color: #34d399; }
+    .code-block .cls { color: #f97316; }
+
+    /* ── Arch grid ── */
+    .arch-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; margin: 16px 0; }
+    .arch-card { background: var(--bg-2); border: 1px solid var(--border); border-radius: 10px; padding: 16px; text-align: center; transition: border-color .25s; }
+    .arch-card:hover { border-color: rgba(99,102,241,.3); }
+    .arch-icon { font-size: 24px; margin-bottom: 8px; }
+    .arch-label { font-size: 11px; letter-spacing: 2px; text-transform: uppercase; font-weight: 600; color: #6366f1; margin-bottom: 4px; }
+    .arch-name { font-family: var(--display); font-size: 13px; font-weight: 700; margin-bottom: 4px; }
+    .arch-sub { font-size: 11px; color: var(--muted-2); line-height: 1.5; }
+
+    /* ── Flow ── */
+    .flow-chain { display: flex; align-items: center; gap: 6px; flex-wrap: wrap; margin: 16px 0; }
+    .flow-node { background: var(--bg-2); border: 1px solid rgba(99,102,241,.3); border-radius: 6px; padding: 6px 12px; font-size: 12px; font-weight: 600; color: #6366f1; white-space: nowrap; }
+    .flow-arrow { color: var(--muted); font-size: 14px; }
+
+    /* ── Result badge ── */
+    .result-badge { display: inline-flex; align-items: center; gap: 6px; padding: 5px 14px; border-radius: 20px; font-size: 12px; font-weight: 600; margin-top: 10px; }
+    .result-badge.success { background: rgba(52,211,153,.1); border: 1px solid rgba(52,211,153,.25); color: #34d399; }
+    .result-badge.success::before { content: '✓'; }
+    .result-badge.indigo { background: rgba(99,102,241,.1); border: 1px solid rgba(99,102,241,.25); color: #818cf8; }
+    .result-badge.indigo::before { content: '✓'; }
+
+    /* ── E-Portfolio ── */
+    .ac-section { border-radius: 12px; padding: 28px; margin-bottom: 52px; }
+    .ac-comp-title { font-family: var(--display); font-size: 16px; font-weight: 800; color: var(--text); margin-bottom: 4px; letter-spacing:-.3px; }
+    .ac-comp-sub { font-size: 13px; color: var(--muted); margin-bottom: 18px; }
+    .ac-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+    .ac-card { background: var(--bg-3); border: 1px solid var(--border); border-radius: 8px; padding: 14px 16px; }
+    .ac-card-id { font-size: 10px; letter-spacing: 2px; text-transform: uppercase; font-weight: 700; margin-bottom: 5px; }
+    .ac-card-text { font-size: 13px; color: var(--text); font-weight: 600; line-height: 1.5; margin-bottom: 5px; }
+    .ac-card-desc { font-size: 12px; color: var(--muted-2); line-height: 1.6; }
+    .proof-divider { display: flex; align-items: center; gap: 14px; margin-bottom: 36px; }
+    .proof-divider-line { flex: 1; height: 1px; background: var(--border); }
+    .proof-divider-label { font-size: 10px; letter-spacing: 4px; text-transform: uppercase; font-weight: 600; color: var(--muted); white-space: nowrap; }
+    .autoval-grid { display: grid; gap: 8px; margin: 16px 0 24px; }
+    .autoval-row { display: flex; align-items: center; justify-content: space-between; background: var(--bg-2); border: 1px solid var(--border); border-radius: 8px; padding: 11px 16px; font-size: 13px; gap: 12px; }
+    .autoval-ac { color: var(--text); font-weight: 500; flex: 1; }
+    .badge-acquis { font-size: 11px; font-weight: 700; padding: 3px 10px; border-radius: 20px; background: rgba(52,211,153,.12); border: 1px solid rgba(52,211,153,.3); color: #34d399; white-space: nowrap; }
+    .badge-encours { font-size: 11px; font-weight: 700; padding: 3px 10px; border-radius: 20px; background: rgba(251,146,60,.12); border: 1px solid rgba(251,146,60,.3); color: #fb923c; white-space: nowrap; }
+    .reflexive-block { background: var(--bg-2); border: 1px solid var(--border); border-radius: 8px; padding: 20px 24px; margin: 10px 0 14px; }
+    .reflexive-item { display: flex; gap: 14px; padding: 12px 0; border-top: 1px solid var(--border); font-size: 13.5px; color: var(--muted-2); line-height: 1.75; }
+    .reflexive-item:first-child { border-top: none; padding-top: 0; }
+    .reflexive-item-icon { font-size: 16px; flex-shrink: 0; margin-top: 1px; }
+    .reflexive-item strong { color: var(--text); }
+
+    /* ── Sidebar ── */
+    .sidebar-box { background: var(--bg-2); border: 1px solid var(--border); border-radius: 10px; padding: 20px; margin-bottom: 14px; }
+    .sidebar-box-title { font-size: 10px; letter-spacing: 3px; text-transform: uppercase; color: var(--muted); font-weight: 600; margin-bottom: 14px; }
+    .sidebar-row { display: flex; justify-content: space-between; align-items: center; padding: 8px 0; border-top: 1px solid var(--border); font-size: 13px; }
+    .sidebar-row:first-of-type { border-top: none; }
+    .sidebar-row-label { color: var(--muted); }
+    .sidebar-row-val { color: var(--text); font-weight: 500; }
+    .sidebar-row-val.indigo { color: #818cf8; }
+
+    @media (max-width: 860px) {
+      .detail-body { grid-template-columns: 1fr; }
+      .detail-sidebar { position: static; }
+      .arch-grid { grid-template-columns: 1fr 1fr; }
+      .ac-grid { grid-template-columns: 1fr; }
+    }
+    @media (max-width: 560px) {
+      .arch-grid { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+
+  <div id="page-loader">
+    <div class="loader-ring"></div>
+    <div class="loader-logo">AV<span>.</span></div>
+  </div>
+
+  <nav class="navbar" id="navbar">
+    <a class="nav-logo" href="index.html">AV<span>.</span></a>
+    <ul class="nav-links">
+      <li><a href="index.html">Accueil</a></li>
+      <li><a href="index.html#about">À propos</a></li>
+      <li><a href="index.html#skills">Compétences</a></li>
+      <li><a href="index.html#parcours">Parcours</a></li>
+      <li><a href="projects.html" class="active">Projets</a></li>
+      <li><a href="competences.html">Compétences</a></li>
+    </ul>
+    <a class="nav-cta" href="index.html#contact">Me contacter</a>
+    <button class="nav-burger" id="burger" aria-label="Menu">
+      <span></span><span></span><span></span>
+    </button>
+  </nav>
+
+  <div class="nav-mobile" id="nav-mobile">
+    <a href="index.html">Accueil</a>
+    <a href="index.html#about">À propos</a>
+    <a href="index.html#skills">Compétences</a>
+    <a href="index.html#parcours">Parcours</a>
+    <a href="projects.html">Projets</a>
+    <a href="competences.html">Compétences</a>
+    <a class="nav-cta" href="index.html#contact" style="align-self:flex-start">Me contacter</a>
+  </div>
+
+
+  <!-- ══ HERO ══ -->
+  <div class="detail-hero">
+    <div class="detail-hero-blob"></div>
+    <div class="container">
+      <a class="detail-back" href="projects.html">← Retour aux projets</a>
+      <div class="detail-meta">
+        <span class="detail-cat" style="color:#6366f1;border:1px solid rgba(99,102,241,.3);background:rgba(99,102,241,.08)">Développement</span>
+        <span class="detail-cat" style="color:#00d4ff;border:1px solid rgba(0,212,255,.3);background:rgba(0,212,255,.08)">Réseau</span>
+        <span class="detail-cat" style="color:#a78bfa;border:1px solid rgba(167,139,250,.3);background:rgba(167,139,250,.08)">SAÉ 3.02</span>
+        <span class="detail-year">2024</span>
+      </div>
+      <h1 class="detail-title">
+        Application Android<br><span class="indigo">Communication TCP/IP</span>
+      </h1>
+      <p class="detail-subtitle">
+        Développement d'une application mobile Android en Java permettant d'établir des communications réseau TCP/IP. L'application agit alternativement en mode serveur (écoute sur port 5000) ou en mode client, avec gestion du multithreading pour ne pas bloquer l'interface utilisateur.
+      </p>
+      <div class="detail-tags">
+        <span class="detail-tag">Android Studio</span>
+        <span class="detail-tag">Java</span>
+        <span class="detail-tag">TCP/IP</span>
+        <span class="detail-tag">Socket</span>
+        <span class="detail-tag">Multithreading</span>
+        <span class="detail-tag">XML UI</span>
+        <span class="detail-tag">Gradle</span>
+        <span class="detail-tag">ServerSocket</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="divider"></div>
+
+
+  <!-- ══ BODY ══ -->
+  <div class="container">
+    <div class="detail-body">
+
+      <!-- ── MAIN ── -->
+      <main class="detail-main">
+
+        <!-- ══ APPRENTISSAGES CRITIQUES ══ -->
+        <div class="ac-section reveal" style="background:rgba(99,102,241,.04);border:1px solid rgba(99,102,241,.15)">
+          <p class="detail-section-label" style="color:#6366f1">Apprentissages Critiques</p>
+          <h2 class="ac-comp-title">Compétence RT3 — Créer des outils et applications pour les R&T</h2>
+          <p class="ac-comp-sub">Référentiel BUT R&T · SAÉ 3.02 · Semestre S3</p>
+          <div class="ac-grid">
+            <div class="ac-card">
+              <div class="ac-card-id" style="color:#6366f1">AC33.01</div>
+              <div class="ac-card-text">Développer des applications communicantes</div>
+              <div class="ac-card-desc">Implémentation d'une application Java/Android utilisant les classes Socket et ServerSocket pour établir des connexions TCP/IP client-serveur bidirectionnelles.</div>
+            </div>
+            <div class="ac-card">
+              <div class="ac-card-id" style="color:#6366f1">AC33.02</div>
+              <div class="ac-card-text">Utiliser les protocoles de transport</div>
+              <div class="ac-card-desc">Mise en œuvre du protocole TCP pour des échanges fiables, orientés connexion. Compréhension des mécanismes de port, d'adressage et de flux de données.</div>
+            </div>
+            <div class="ac-card">
+              <div class="ac-card-id" style="color:#6366f1">AC33.03</div>
+              <div class="ac-card-text">Maîtriser le cycle de vie d'une application Android</div>
+              <div class="ac-card-desc">Gestion des activités Android, conception d'interfaces XML, implémentation du multithreading pour séparer logique réseau et UI sans bloquer le thread principal.</div>
+            </div>
+            <div class="ac-card">
+              <div class="ac-card-id" style="color:#6366f1">AC33.04</div>
+              <div class="ac-card-text">Déployer un environnement de développement</div>
+              <div class="ac-card-desc">Configuration d'Android Studio avec Kotlin DSL (Gradle), gestion des permissions AndroidManifest, déploiement et tests sur émulateur Android 7.0+.</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- ══ DOCUMENT DE PREUVES ══ -->
+        <div class="proof-divider">
+          <div class="proof-divider-line"></div>
+          <div class="proof-divider-label">Document de Preuves</div>
+          <div class="proof-divider-line"></div>
+        </div>
+
+        <!-- Architecture -->
+        <div class="detail-section reveal">
+          <p class="detail-section-label">Architecture</p>
+          <h2 class="detail-section-title">Vue d'ensemble de l'application</h2>
+          <p class="detail-text">
+            L'application est conçue autour d'une architecture <strong>dual-mode</strong> : elle peut fonctionner indépendamment comme serveur TCP ou comme client TCP. Les deux modes partagent la même interface graphique et une console de logs commune pour le suivi des échanges.
+          </p>
+
+          <div class="arch-grid">
+            <div class="arch-card">
+              <div class="arch-icon">📱</div>
+              <div class="arch-label">Interface</div>
+              <div class="arch-name">activity_main.xml</div>
+              <div class="arch-sub">Champs IP/Port · Boutons · Console de log</div>
+            </div>
+            <div class="arch-card">
+              <div class="arch-icon">🖧</div>
+              <div class="arch-label">Serveur</div>
+              <div class="arch-name">ServerTCP.java</div>
+              <div class="arch-sub">Port 5000 · 0.0.0.0 · Echo préfixé</div>
+            </div>
+            <div class="arch-card">
+              <div class="arch-icon">📡</div>
+              <div class="arch-label">Client</div>
+              <div class="arch-name">ClientTCP.java</div>
+              <div class="arch-sub">Socket · IP dynamique · Envoi/réception</div>
+            </div>
+          </div>
+
+          <p class="detail-text" style="margin-top:8px">Flux de communication :</p>
+          <div class="flow-chain">
+            <div class="flow-node">Client Android</div>
+            <div class="flow-arrow">→</div>
+            <div class="flow-node">Socket TCP</div>
+            <div class="flow-arrow">→</div>
+            <div class="flow-node">Port 5000</div>
+            <div class="flow-arrow">→</div>
+            <div class="flow-node">ServerSocket</div>
+            <div class="flow-arrow">→</div>
+            <div class="flow-node">Thread serveur</div>
+            <div class="flow-arrow">→</div>
+            <div class="flow-node">Réponse "Echo :"</div>
+          </div>
+        </div>
+
+        <!-- Étape 1 — Config réseau -->
+        <div class="detail-section reveal" data-delay="0.08">
+          <p class="detail-section-label">Étape 1</p>
+          <h2 class="detail-section-title">Configuration réseau — AndroidManifest & Gradle</h2>
+          <p class="detail-text">
+            L'accès au réseau sur Android nécessite une déclaration explicite des permissions dans le manifeste. Le projet utilise le <strong>Kotlin DSL Gradle</strong> comme système de build, ciblant Android 7.0 (API 24) minimum.
+          </p>
+
+          <div class="step">
+            <div class="step-header">
+              <div class="step-num">1</div>
+              <div class="step-title">Permission INTERNET dans AndroidManifest.xml</div>
+            </div>
+            <div class="step-desc">
+              Sans cette permission, toute tentative d'ouverture de socket lève une <strong>SecurityException</strong> au runtime. Elle est déclarée au niveau de l'application, avant la balise <code style="color:#6366f1">&lt;application&gt;</code>.
+            </div>
+            <div class="code-block"><span class="cm">&lt;!-- AndroidManifest.xml --&gt;</span>
+<span class="kw">&lt;uses-permission</span> <span class="val">android:name</span>=<span class="str">"android.permission.INTERNET"</span> <span class="kw">/&gt;</span>
+
+<span class="kw">&lt;application</span>
+  <span class="val">android:usesCleartextTraffic</span>=<span class="str">"true"</span>
+  <span class="cm">&lt;!-- Autoriser HTTP non-chiffré pour les tests LAN --&gt;</span>
+  <span class="val">...
+</span><span class="kw">&gt;</span></div>
+            <div class="result-badge indigo">Permission réseau déclarée — accès socket autorisé</div>
+          </div>
+
+          <div class="step">
+            <div class="step-header">
+              <div class="step-num">2</div>
+              <div class="step-title">Configuration Gradle (Kotlin DSL)</div>
+            </div>
+            <div class="step-desc">
+              Configuration du build avec <strong>minSdk 24</strong> (Android 7.0) pour une compatibilité maximale avec les appareils récents. Le gestionnaire de dépendances Kotlin DSL remplace Groovy pour une meilleure lisibilité et typage statique.
+            </div>
+            <div class="code-block"><span class="cm">// build.gradle.kts (app)</span>
+android {
+  <span class="val">compileSdk</span> = <span class="grn">34</span>
+  defaultConfig {
+    <span class="val">minSdk</span>     = <span class="grn">24</span>  <span class="cm">// Android 7.0+</span>
+    <span class="val">targetSdk</span>  = <span class="grn">34</span>
+  }
+}</div>
+            <div class="result-badge indigo">Build configuré — API 24+ ciblée</div>
+          </div>
+        </div>
+
+        <!-- Étape 2 — Serveur TCP -->
+        <div class="detail-section reveal" data-delay="0.12">
+          <p class="detail-section-label">Étape 2</p>
+          <h2 class="detail-section-title">Serveur TCP — ServerTCP.java</h2>
+          <p class="detail-text">
+            Le serveur écoute les connexions entrantes sur le <strong>port 5000</strong> et répond à chaque message reçu par un écho préfixé. Pour ne pas bloquer l'interface utilisateur Android, toute l'écoute est faite dans un <strong>Thread dédié</strong>.
+          </p>
+
+          <div class="step">
+            <div class="step-header">
+              <div class="step-num">1</div>
+              <div class="step-title">Création du ServerSocket et attente de connexion</div>
+            </div>
+            <div class="step-desc">
+              Un <strong>ServerSocket</strong> est créé sur le port 5000, écoutant sur toutes les interfaces réseau. La méthode <code style="color:#6366f1">accept()</code> est bloquante, d'où le thread séparé.
+            </div>
+            <div class="code-block"><span class="cm">// ServerTCP.java — Lancement du serveur dans un Thread</span>
+<span class="kw">new</span> <span class="cls">Thread</span>(() -&gt; {
+  <span class="kw">try</span> (ServerSocket serverSocket = <span class="kw">new</span> <span class="cls">ServerSocket</span>(<span class="grn">5000</span>)) {
+    log(<span class="str">"Serveur démarré sur port 5000..."</span>);
+
+    Socket client = serverSocket.<span class="grn">accept</span>(); <span class="cm">// Attente connexion</span>
+    log(<span class="str">"Client connecté : "</span> + client.getInetAddress());
+
+    <span class="cls">BufferedReader</span> in  = <span class="kw">new</span> <span class="cls">BufferedReader</span>(<span class="kw">new</span> <span class="cls">InputStreamReader</span>(client.getInputStream()));
+    <span class="cls">PrintWriter</span>    out = <span class="kw">new</span> <span class="cls">PrintWriter</span>(client.getOutputStream(), <span class="kw">true</span>);
+
+    <span class="cls">String</span> msg;
+    <span class="kw">while</span> ((msg = in.readLine()) != <span class="kw">null</span>) {
+      log(<span class="str">"Reçu : "</span> + msg);
+      out.println(<span class="str">"Echo : "</span> + msg); <span class="cm">// Réponse au client</span>
+    }
+  } <span class="kw">catch</span> (<span class="cls">IOException</span> e) { log(<span class="str">"Erreur serveur : "</span> + e.getMessage()); }
+}).start();</div>
+            <div class="result-badge success">Serveur TCP opérationnel — écho sur port 5000</div>
+          </div>
+        </div>
+
+        <!-- Étape 3 — Client TCP -->
+        <div class="detail-section reveal" data-delay="0.16">
+          <p class="detail-section-label">Étape 3</p>
+          <h2 class="detail-section-title">Client TCP — ClientTCP.java</h2>
+          <p class="detail-text">
+            Le client se connecte à un serveur distant à l'<strong>IP et au port saisis</strong> par l'utilisateur. L'envoi et la réception de messages sont également asynchrones pour garantir la fluidité de l'interface.
+          </p>
+
+          <div class="step">
+            <div class="step-header">
+              <div class="step-num">1</div>
+              <div class="step-title">Connexion et échange de messages</div>
+            </div>
+            <div class="step-desc">
+              La classe <strong>Socket</strong> établit la connexion TCP. Les flux d'entrée/sortie sont enveloppés dans des <code style="color:#6366f1">BufferedReader</code> / <code style="color:#6366f1">PrintWriter</code> pour manipuler des lignes de texte.
+            </div>
+            <div class="code-block"><span class="cm">// ClientTCP.java — Connexion et envoi de message</span>
+<span class="kw">new</span> <span class="cls">Thread</span>(() -&gt; {
+  <span class="kw">try</span> (<span class="cls">Socket</span> socket = <span class="kw">new</span> <span class="cls">Socket</span>(ipAdresse, port)) {
+    log(<span class="str">"Connecté à "</span> + ipAdresse + <span class="str">":"</span> + port);
+
+    <span class="cls">PrintWriter</span>    out = <span class="kw">new</span> <span class="cls">PrintWriter</span>(socket.getOutputStream(), <span class="kw">true</span>);
+    <span class="cls">BufferedReader</span> in  = <span class="kw">new</span> <span class="cls">BufferedReader</span>(<span class="kw">new</span> <span class="cls">InputStreamReader</span>(socket.getInputStream()));
+
+    out.println(message);                  <span class="cm">// Envoi du message</span>
+    <span class="cls">String</span> reponse = in.readLine();        <span class="cm">// Lecture de l'écho serveur</span>
+    log(<span class="str">"Réponse : "</span> + reponse);
+
+  } <span class="kw">catch</span> (<span class="cls">IOException</span> e) { log(<span class="str">"Erreur client : "</span> + e.getMessage()); }
+}).start();</div>
+            <div class="result-badge success">Communication client-serveur bidirectionnelle validée</div>
+          </div>
+        </div>
+
+        <!-- Étape 4 — Interface utilisateur -->
+        <div class="detail-section reveal" data-delay="0.20">
+          <p class="detail-section-label">Étape 4</p>
+          <h2 class="detail-section-title">Interface XML — activity_main.xml</h2>
+          <p class="detail-text">
+            L'interface graphique est conçue en <strong>XML Android</strong> avec un layout linéaire. Elle offre une prise en main immédiate grâce à des contrôles clairs et une console de logs intégrée.
+          </p>
+
+          <div class="step">
+            <div class="step-header">
+              <div class="step-num">1</div>
+              <div class="step-title">Composants de l'interface</div>
+            </div>
+            <div class="step-desc">
+              L'UI est divisée en deux zones : <strong>Réseau</strong> (IP + port + boutons d'action) et <strong>Console de log</strong> (ScrollView affichant les échanges en temps réel).
+            </div>
+            <ul style="padding-left:18px;list-style:disc;color:var(--muted-2);font-size:13.5px;line-height:2;margin-top:10px">
+              <li><strong style="color:var(--text)">EditText IP</strong> — Saisie de l'adresse IP du serveur cible</li>
+              <li><strong style="color:var(--text)">EditText Port</strong> — Saisie du port de connexion (défaut : 5000)</li>
+              <li><strong style="color:var(--text)">Bouton "Démarrer Serveur"</strong> — Lance ServerTCP dans un thread</li>
+              <li><strong style="color:var(--text)">Bouton "Connecter"</strong> — Lance la connexion ClientTCP</li>
+              <li><strong style="color:var(--text)">Bouton "Envoyer"</strong> — Envoie le message saisi</li>
+              <li><strong style="color:var(--text)">Console Logs</strong> — ScrollView auto-scroll pour les échanges</li>
+            </ul>
+            <div class="result-badge indigo">Interface dual-mode fonctionnelle sur émulateur</div>
+          </div>
+        </div>
+
+        <!-- Bilan -->
+        <div class="detail-section reveal" data-delay="0.26">
+          <p class="detail-section-label">Bilan</p>
+          <h2 class="detail-section-title">Résultats et perspectives</h2>
+          <p class="detail-text">
+            L'application satisfait les <strong>critères de base</strong> de la SAÉ 3.02 : communication TCP/IP bidirectionnelle fonctionnelle, gestion du multithreading, interface claire. Les tests conduits sur simulateur Android ont validé la stabilité de la connexion.
+          </p>
+          <ul style="padding-left:18px;list-style:disc;color:var(--muted-2);font-size:13.5px;line-height:2">
+            <li><strong style="color:var(--text)">TCP / Sockets :</strong> connexion client-serveur stable, échanges de messages validés</li>
+            <li><strong style="color:var(--text)">Multithreading :</strong> UI fluide — zéro blocage du thread principal</li>
+            <li><strong style="color:var(--text)">Architecture dual-mode :</strong> basculement client/serveur sans redémarrage</li>
+            <li><strong style="color:var(--text)">Écho serveur :</strong> préfixe "Echo :" affiché dans la console du client</li>
+          </ul>
+
+          <div style="margin-top:20px;padding:18px 22px;background:var(--bg-2);border:1px solid rgba(99,102,241,.2);border-radius:10px;">
+            <div style="font-size:10px;letter-spacing:3px;text-transform:uppercase;color:#6366f1;font-weight:600;margin-bottom:10px">Perspectives d'amélioration</div>
+            <ul style="padding-left:18px;list-style:disc;color:var(--muted-2);font-size:13px;line-height:1.9">
+              <li><strong style="color:var(--text)">Multithreading serveur</strong> — gérer plusieurs clients simultanément avec un thread pool</li>
+              <li><strong style="color:var(--text)">Protocol UDP</strong> — implémenter DatagramSocket pour des transferts sans connexion</li>
+              <li><strong style="color:var(--text)">Sérialisation</strong> — envoyer des objets Java sérialisés plutôt que de simples chaînes</li>
+            </ul>
+          </div>
+        </div>
+
+        <!-- ══ CONCLUSION PAR COMPÉTENCE ══ -->
+        <div class="detail-section reveal" data-delay="0.30">
+          <p class="detail-section-label" style="color:#6366f1">Conclusion par Compétence</p>
+          <h2 class="detail-section-title">Auto-évaluation &amp; Analyse Réflexive</h2>
+          <p class="detail-text">Évaluation de l'acquisition des apprentissages critiques RT3 au travers de cette SAÉ :</p>
+          <div class="autoval-grid">
+            <div class="autoval-row">
+              <span class="autoval-ac">AC33.01 — Développer des applications communicantes (Socket TCP)</span>
+              <span class="badge-acquis">Acquis</span>
+            </div>
+            <div class="autoval-row">
+              <span class="autoval-ac">AC33.02 — Utiliser les protocoles de transport (TCP)</span>
+              <span class="badge-acquis">Acquis</span>
+            </div>
+            <div class="autoval-row">
+              <span class="autoval-ac">AC33.03 — Cycle de vie Android &amp; multithreading</span>
+              <span class="badge-acquis">Acquis</span>
+            </div>
+            <div class="autoval-row">
+              <span class="autoval-ac">AC33.04 — Déployer un environnement de développement mobile</span>
+              <span class="badge-encours">En cours d'acquisition</span>
+            </div>
+          </div>
+          <p class="detail-text" style="margin-bottom:12px">Analyse réflexive :</p>
+          <div class="reflexive-block">
+            <div class="reflexive-item">
+              <div class="reflexive-item-icon">💡</div>
+              <div><strong>Ce que j'ai acquis.</strong> Cette SAÉ m'a permis de relier concrètement la couche transport (TCP) à une implémentation logicielle : je comprenais le fonctionnement du protocole en cours, mais écrire un ServerSocket qui accepte une connexion et y répond m'a donné une vision claire du cycle requête-réponse. La gestion du multithreading Android était une contrainte supplémentaire qui m'a obligé à comprendre pourquoi les opérations réseau ne peuvent pas se faire sur le thread UI.</div>
+            </div>
+            <div class="reflexive-item">
+              <div class="reflexive-item-icon">⚡</div>
+              <div><strong>Principale difficulté.</strong> La gestion des exceptions réseau en Java Android est verbeuse. La fermeture correcte des flux (try-with-resources) et la synchronisation entre le thread réseau et le thread UI pour mettre à jour la console de log sans crash ont demandé plusieurs itérations de débogage.</div>
+            </div>
+            <div class="reflexive-item">
+              <div class="reflexive-item-icon">🔄</div>
+              <div><strong>Ce que je ferais différemment.</strong> J'utiliserais <strong>Kotlin Coroutines</strong> avec les scopes Android plutôt que des Threads Java bruts — la gestion du cycle de vie est plus sûre et le code plus lisible. Je gérerais aussi plusieurs clients côté serveur dès le départ, avec un ExecutorService.</div>
+            </div>
+          </div>
+        </div>
+
+      </main>
+
+      <!-- ── SIDEBAR ── -->
+      <aside class="detail-sidebar">
+
+        <div class="sidebar-box">
+          <div class="sidebar-box-title">Informations projet</div>
+          <div class="sidebar-row">
+            <span class="sidebar-row-label">Contexte</span>
+            <span class="sidebar-row-val">SAÉ 3.02</span>
+          </div>
+          <div class="sidebar-row">
+            <span class="sidebar-row-label">Semestre</span>
+            <span class="sidebar-row-val">S3 — BUT RT</span>
+          </div>
+          <div class="sidebar-row">
+            <span class="sidebar-row-label">Date</span>
+            <span class="sidebar-row-val">2024</span>
+          </div>
+          <div class="sidebar-row">
+            <span class="sidebar-row-label">Langage</span>
+            <span class="sidebar-row-val indigo">Java / XML</span>
+          </div>
+          <div class="sidebar-row">
+            <span class="sidebar-row-label">IDE</span>
+            <span class="sidebar-row-val">Android Studio</span>
+          </div>
+          <div class="sidebar-row">
+            <span class="sidebar-row-label">Protocole</span>
+            <span class="sidebar-row-val indigo">TCP/IP</span>
+          </div>
+          <div class="sidebar-row">
+            <span class="sidebar-row-label">Port serveur</span>
+            <span class="sidebar-row-val">5000</span>
+          </div>
+          <div class="sidebar-row">
+            <span class="sidebar-row-label">Cible Android</span>
+            <span class="sidebar-row-val">API 24+ (7.0)</span>
+          </div>
+        </div>
+
+        <div class="sidebar-box">
+          <div class="sidebar-box-title">ACs mobilisées</div>
+          <div style="display:flex;flex-direction:column;gap:8px;margin-top:4px;font-size:13px;color:var(--muted-2)">
+            <div style="display:flex;align-items:center;gap:8px"><span style="color:#6366f1;font-size:10px">▸</span> AC33.01 — Applis communicantes</div>
+            <div style="display:flex;align-items:center;gap:8px"><span style="color:#6366f1;font-size:10px">▸</span> AC33.02 — Protocoles transport</div>
+            <div style="display:flex;align-items:center;gap:8px"><span style="color:#6366f1;font-size:10px">▸</span> AC33.03 — Android lifecycle</div>
+            <div style="display:flex;align-items:center;gap:8px"><span style="color:#6366f1;font-size:10px">▸</span> AC33.04 — Env. de développement</div>
+          </div>
+        </div>
+
+        <div class="sidebar-box">
+          <div class="sidebar-box-title">Stack technique</div>
+          <div style="display:flex;flex-wrap:wrap;gap:6px;margin-top:4px">
+            <span class="detail-tag" style="padding:3px 10px">Android Studio</span>
+            <span class="detail-tag" style="padding:3px 10px">Java</span>
+            <span class="detail-tag" style="padding:3px 10px">Socket</span>
+            <span class="detail-tag" style="padding:3px 10px">ServerSocket</span>
+            <span class="detail-tag" style="padding:3px 10px">Thread</span>
+            <span class="detail-tag" style="padding:3px 10px">XML UI</span>
+            <span class="detail-tag" style="padding:3px 10px">Gradle Kotlin DSL</span>
+          </div>
+        </div>
+
+        <a class="btn-ghost" href="projects.html" style="width:100%;justify-content:center;text-align:center;margin-top:6px">← Tous les projets</a>
+
+      </aside>
+
+    </div>
+  </div>
+
+
+  <!-- ══ FOOTER ══ -->
+  <footer>
+    <div class="footer-logo">Antoine<span>.</span></div>
+    <span>Roanne / Bron · 2026</span>
+    <div class="footer-links">
+      <a href="index.html">Accueil</a>
+      <a href="projects.html">Projets</a>
+      <a href="index.html#contact">Contact</a>
+    </div>
+  </footer>
+
+  <script src="main.js"></script>
+</body>
+</html>

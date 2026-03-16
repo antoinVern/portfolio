@@ -340,12 +340,12 @@ section {
 }
 
 .hero-inner {
-  display: grid;
-  grid-template-columns: 1.1fr 0.9fr;
-  gap: 72px;
-  align-items: center;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
   position: relative;
   z-index: 1;
+  max-width: 700px;
 }
 
 .hero-eyebrow {
@@ -1072,6 +1072,10 @@ footer {
 @media (max-width: 1100px) {
   .skills-grid-3 { grid-template-columns: repeat(2, 1fr); }
   .skills-grid-2 { grid-template-columns: repeat(2, 1fr); }
+}
+@media (max-width: 1024px) {
+  .hero-inner { grid-template-columns: 1fr; }
+  .hero-card  { display: none; }
 }
 @media (max-width: 860px) {
   .container { padding: 0 24px; }
