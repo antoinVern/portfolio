@@ -1,0 +1,907 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Infrastructure Sécurisée PME — Antoine Vernay</title>
+  <meta name="description" content="SAÉ 3.03 — Déploiement d'une infrastructure système et réseau sécurisée : Active Directory, OSPF, RADIUS Wi-Fi, Grafana, GPO, PowerShell." />
+  <link rel="stylesheet" href="style.css" />
+  <style>
+    /* ── Detail page specific ── */
+    .detail-hero {
+      padding: calc(var(--nav-h) + 64px) 0 64px;
+      position: relative;
+      overflow: hidden;
+    }
+    .detail-hero-blob {
+      position: absolute;
+      width: 700px; height: 400px;
+      border-radius: 50%;
+      background: radial-gradient(ellipse, rgba(16,185,129,.07) 0%, transparent 70%);
+      top: -60px; right: -200px;
+      pointer-events: none;
+    }
+    .detail-back {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 13px;
+      color: var(--muted-2);
+      text-decoration: none;
+      margin-bottom: 28px;
+      transition: color .2s;
+    }
+    .detail-back:hover { color: var(--text); }
+    .detail-meta {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      flex-wrap: wrap;
+      margin-bottom: 18px;
+    }
+    .detail-cat {
+      font-size: 10px;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      font-weight: 600;
+      padding: 3px 11px;
+      border-radius: 3px;
+    }
+    .detail-year { font-size: 12px; color: var(--muted); }
+    .detail-title {
+      font-family: var(--display);
+      font-size: clamp(28px, 3.8vw, 52px);
+      font-weight: 800;
+      line-height: 1.06;
+      letter-spacing: -2px;
+      margin-bottom: 20px;
+    }
+    .detail-title .green { color: #10b981; }
+    .detail-subtitle {
+      font-size: 16px;
+      color: var(--muted-2);
+      line-height: 1.8;
+      max-width: 640px;
+      margin-bottom: 36px;
+    }
+    .detail-tags { display: flex; flex-wrap: wrap; gap: 8px; }
+    .detail-tag {
+      font-size: 12px;
+      padding: 5px 13px;
+      background: var(--bg-3);
+      border: 1px solid var(--border);
+      border-radius: 20px;
+      color: var(--muted-2);
+    }
+
+    /* ── Layout ── */
+    .detail-body {
+      display: grid;
+      grid-template-columns: 1fr 280px;
+      gap: 56px;
+      align-items: start;
+      padding-bottom: 96px;
+    }
+    .detail-main { min-width: 0; }
+    .detail-sidebar { position: sticky; top: calc(var(--nav-h) + 24px); }
+
+    /* ── Sections ── */
+    .detail-section { margin-bottom: 52px; }
+    .detail-section-label {
+      font-size: 10px;
+      letter-spacing: 4px;
+      text-transform: uppercase;
+      color: #10b981;
+      font-weight: 600;
+      margin-bottom: 12px;
+    }
+    .detail-section-title {
+      font-family: var(--display);
+      font-size: 22px;
+      font-weight: 800;
+      letter-spacing: -.5px;
+      margin-bottom: 18px;
+      padding-bottom: 14px;
+      border-bottom: 1px solid var(--border);
+    }
+    .detail-text {
+      font-size: 14.5px;
+      color: var(--muted-2);
+      line-height: 1.85;
+      margin-bottom: 16px;
+    }
+    .detail-text strong { color: var(--text); font-weight: 600; }
+
+    /* ── Step cards ── */
+    .step {
+      background: var(--bg-2);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 22px;
+      margin-bottom: 14px;
+      transition: border-color .25s;
+    }
+    .step:hover { border-color: rgba(16,185,129,.3); }
+    .step-header {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 12px;
+    }
+    .step-num {
+      width: 28px; height: 28px;
+      border-radius: 50%;
+      background: rgba(16,185,129,.1);
+      border: 2px solid rgba(16,185,129,.4);
+      color: #10b981;
+      font-size: 12px;
+      font-weight: 700;
+      font-family: var(--display);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+    }
+    .step-title {
+      font-family: var(--display);
+      font-size: 15px;
+      font-weight: 700;
+    }
+    .step-desc {
+      font-size: 13.5px;
+      color: var(--muted-2);
+      line-height: 1.75;
+    }
+    .step-desc strong { color: var(--text); }
+
+    /* ── Code block ── */
+    .code-block {
+      background: #0a0e14;
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 16px 20px;
+      font-family: 'Courier New', monospace;
+      font-size: 13px;
+      color: #10b981;
+      line-height: 1.65;
+      overflow-x: auto;
+      margin: 12px 0;
+    }
+    .code-block .cm  { color: #4a5568; }
+    .code-block .kw  { color: #10b981; }
+    .code-block .val { color: #00d4ff; }
+    .code-block .str { color: #f59e0b; }
+
+    /* ── Pole grid ── */
+    .pole-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 12px;
+      margin: 16px 0;
+    }
+    .pole-card {
+      background: var(--bg-2);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 16px;
+      transition: border-color .25s;
+    }
+    .pole-card:hover { border-color: rgba(16,185,129,.3); }
+    .pole-card-icon {
+      font-size: 22px;
+      margin-bottom: 8px;
+    }
+    .pole-card-title {
+      font-family: var(--display);
+      font-size: 13px;
+      font-weight: 700;
+      margin-bottom: 6px;
+      color: var(--text);
+    }
+    .pole-card-desc {
+      font-size: 12px;
+      color: var(--muted-2);
+      line-height: 1.65;
+    }
+    @media (max-width: 560px) {
+      .pole-grid { grid-template-columns: 1fr; }
+    }
+
+    /* ── Result badge ── */
+    .result-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 5px 14px;
+      border-radius: 20px;
+      font-size: 12px;
+      font-weight: 600;
+      margin-top: 10px;
+    }
+    .result-badge.success {
+      background: rgba(52,211,153,.1);
+      border: 1px solid rgba(52,211,153,.25);
+      color: #34d399;
+    }
+    .result-badge.green {
+      background: rgba(16,185,129,.1);
+      border: 1px solid rgba(16,185,129,.25);
+      color: #10b981;
+    }
+    .result-badge::before { content: '✓'; }
+
+    /* ── Quote highlight ── */
+    .pro-quote {
+      margin: 28px 0;
+      padding: 20px 24px;
+      background: var(--bg-2);
+      border-left: 3px solid #10b981;
+      border-radius: 0 8px 8px 0;
+      font-size: 14px;
+      color: var(--muted-2);
+      line-height: 1.75;
+      font-style: italic;
+    }
+    .pro-quote strong { color: var(--text); font-style: normal; }
+
+    /* ── Sidebar ── */
+    .sidebar-box {
+      background: var(--bg-2);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 20px;
+      margin-bottom: 14px;
+    }
+    .sidebar-box-title {
+      font-size: 10px;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      color: var(--muted);
+      font-weight: 600;
+      margin-bottom: 14px;
+    }
+    .sidebar-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 8px 0;
+      border-top: 1px solid var(--border);
+      font-size: 13px;
+    }
+    .sidebar-row:first-of-type { border-top: none; }
+    .sidebar-row-label { color: var(--muted); }
+    .sidebar-row-val { color: var(--text); font-weight: 500; }
+    .sidebar-row-val.emerald { color: #10b981; }
+    .sidebar-row-val.green   { color: #34d399; }
+
+    /* ── Check list ── */
+    .check-list { list-style: none; padding: 0; margin: 0; }
+    .check-list li {
+      display: flex;
+      align-items: flex-start;
+      gap: 10px;
+      padding: 8px 0;
+      border-top: 1px solid var(--border);
+      font-size: 13px;
+      color: var(--muted-2);
+      line-height: 1.6;
+    }
+    .check-list li:first-child { border-top: none; }
+    .check-list li::before {
+      content: '▸';
+      color: #10b981;
+      flex-shrink: 0;
+      margin-top: 2px;
+    }
+
+    /* ── E-Portfolio ── */
+    .ac-section { border-radius: 12px; padding: 28px; margin-bottom: 52px; }
+    .ac-comp-title { font-family: var(--display); font-size: 16px; font-weight: 800; color: var(--text); margin-bottom: 4px; letter-spacing:-.3px; }
+    .ac-comp-sub { font-size: 13px; color: var(--muted); margin-bottom: 18px; }
+    .ac-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+    .ac-card { background: var(--bg-3); border: 1px solid var(--border); border-radius: 8px; padding: 14px 16px; }
+    .ac-card-id { font-size: 10px; letter-spacing: 2px; text-transform: uppercase; font-weight: 700; margin-bottom: 5px; }
+    .ac-card-text { font-size: 13px; color: var(--text); font-weight: 600; line-height: 1.5; margin-bottom: 5px; }
+    .ac-card-desc { font-size: 12px; color: var(--muted-2); line-height: 1.6; }
+    .proof-divider { display: flex; align-items: center; gap: 14px; margin-bottom: 36px; }
+    .proof-divider-line { flex: 1; height: 1px; background: var(--border); }
+    .proof-divider-label { font-size: 10px; letter-spacing: 4px; text-transform: uppercase; font-weight: 600; color: var(--muted); white-space: nowrap; }
+    .autoval-grid { display: grid; gap: 8px; margin: 16px 0 24px; }
+    .autoval-row { display: flex; align-items: center; justify-content: space-between; background: var(--bg-2); border: 1px solid var(--border); border-radius: 8px; padding: 11px 16px; font-size: 13px; gap: 12px; }
+    .autoval-ac { color: var(--text); font-weight: 500; flex: 1; }
+    .badge-acquis { font-size: 11px; font-weight: 700; padding: 3px 10px; border-radius: 20px; background: rgba(52,211,153,.12); border: 1px solid rgba(52,211,153,.3); color: #34d399; white-space: nowrap; }
+    .badge-encours { font-size: 11px; font-weight: 700; padding: 3px 10px; border-radius: 20px; background: rgba(251,146,60,.12); border: 1px solid rgba(251,146,60,.3); color: #fb923c; white-space: nowrap; }
+    .reflexive-block { background: var(--bg-2); border: 1px solid var(--border); border-radius: 8px; padding: 20px 24px; margin: 10px 0 14px; }
+    .reflexive-item { display: flex; gap: 14px; padding: 12px 0; border-top: 1px solid var(--border); font-size: 13.5px; color: var(--muted-2); line-height: 1.75; }
+    .reflexive-item:first-child { border-top: none; padding-top: 0; }
+    .reflexive-item-icon { font-size: 16px; flex-shrink: 0; margin-top: 1px; }
+    .reflexive-item strong { color: var(--text); }
+    @media (max-width: 860px) {
+      .detail-body { grid-template-columns: 1fr; }
+      .detail-sidebar { position: static; }
+      .ac-grid { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ══ PAGE LOADER ══════════════════════════════ -->
+  <div id="page-loader">
+    <div class="loader-ring"></div>
+    <div class="loader-logo">AV<span>.</span></div>
+  </div>
+
+  <!-- ══ NAVBAR ══ -->
+  <nav class="navbar" id="navbar">
+    <a class="nav-logo" href="index.html">AV<span>.</span></a>
+    <ul class="nav-links">
+      <li><a href="index.html">Accueil</a></li>
+      <li><a href="index.html#about">À propos</a></li>
+      <li><a href="index.html#skills">Compétences</a></li>
+      <li><a href="index.html#parcours">Parcours</a></li>
+      <li><a href="projects.html" class="active">Projets</a></li>
+    </ul>
+    <a class="nav-cta" href="index.html#contact">Me contacter</a>
+    <button class="nav-burger" id="burger" aria-label="Menu">
+      <span></span><span></span><span></span>
+    </button>
+  </nav>
+
+  <!-- Mobile menu -->
+  <div class="nav-mobile" id="nav-mobile">
+    <a href="index.html">Accueil</a>
+    <a href="index.html#about">À propos</a>
+    <a href="index.html#skills">Compétences</a>
+    <a href="index.html#parcours">Parcours</a>
+    <a href="projects.html">Projets</a>
+    <a class="nav-cta" href="index.html#contact" style="align-self:flex-start">Me contacter</a>
+  </div>
+
+
+  <!-- ══ DETAIL HERO ══ -->
+  <div class="detail-hero">
+    <div class="detail-hero-blob"></div>
+    <div class="container">
+
+      <a class="detail-back" href="projects.html">← Retour aux projets</a>
+
+      <div class="detail-meta">
+        <span class="detail-cat" style="color:#10b981;border:1px solid rgba(16,185,129,.3);background:rgba(16,185,129,.08)">Système &amp; Réseau</span>
+        <span class="detail-cat" style="color:#00d4ff;border:1px solid rgba(0,212,255,.3);background:rgba(0,212,255,.08)">Infrastructure</span>
+        <span class="detail-cat" style="color:#a78bfa;border:1px solid rgba(167,139,250,.3);background:rgba(167,139,250,.08)">SAÉ 3.03</span>
+        <span class="detail-year">Janvier 2025</span>
+      </div>
+
+      <h1 class="detail-title">
+        Infrastructure Sécurisée<br><span class="green">pour PME — AD &amp; Supervision</span>
+      </h1>
+      <p class="detail-subtitle">
+        Déploiement complet d'une infrastructure système et réseau moderne pour une PME en croissance — domaine Active Directory redondant, Wi-Fi WPA2/WPA3 Enterprise via RADIUS, routage OSPF, Remote Desktop Web et supervision proactive Prometheus + Grafana.
+      </p>
+      <div class="detail-tags">
+        <span class="detail-tag">Windows Server 2022</span>
+        <span class="detail-tag">Active Directory</span>
+        <span class="detail-tag">OSPF</span>
+        <span class="detail-tag">RADIUS 802.1x</span>
+        <span class="detail-tag">NPS</span>
+        <span class="detail-tag">GPO</span>
+        <span class="detail-tag">Prometheus</span>
+        <span class="detail-tag">Grafana</span>
+        <span class="detail-tag">RDWeb</span>
+        <span class="detail-tag">Apache</span>
+        <span class="detail-tag">PowerShell</span>
+        <span class="detail-tag">Debian 10</span>
+        <span class="detail-tag">VCenter</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="divider"></div>
+
+
+  <!-- ══ DETAIL BODY ══ -->
+  <div class="container">
+    <div class="detail-body">
+
+      <!-- ── MAIN ── -->
+      <main class="detail-main">
+
+        <!-- ══ APPRENTISSAGES CRITIQUES ══ -->
+        <div class="ac-section reveal" style="background:rgba(16,185,129,.04);border:1px solid rgba(16,185,129,.15)">
+          <p class="detail-section-label" style="color:#10b981">Apprentissages Critiques</p>
+          <h2 class="ac-comp-title">Compétences RT1, RT2 &amp; RT3 — Infrastructure complète système &amp; réseau</h2>
+          <p class="ac-comp-sub">Référentiel BUT R&amp;T · SAÉ 3.03 · Semestre S5</p>
+          <div class="ac-grid">
+            <div class="ac-card">
+              <div class="ac-card-id" style="color:#10b981">AC31.01</div>
+              <div class="ac-card-text">Concevoir un réseau avec haute disponibilité</div>
+              <div class="ac-card-desc">Domaine AD redondant (2 DC en réplication), routage dynamique OSPF, segmentation réseau sur switchs Cisco 2960.</div>
+            </div>
+            <div class="ac-card">
+              <div class="ac-card-id" style="color:#10b981">AC32.01</div>
+              <div class="ac-card-text">Déployer des systèmes de communication</div>
+              <div class="ac-card-desc">AD-DS, DHCP routeur, Remote Desktop Web, serveur Apache Debian 10 — déployés sous VCenter en environnement virtualisé.</div>
+            </div>
+            <div class="ac-card">
+              <div class="ac-card-id" style="color:#10b981">AC32.02</div>
+              <div class="ac-card-text">Déployer des réseaux d'accès sans fil</div>
+              <div class="ac-card-desc">Wi-Fi WPA2/WPA3 Enterprise avec authentification 802.1x via NPS/RADIUS couplé à l'Active Directory. SSID invités isolé sur 2,4 GHz.</div>
+            </div>
+            <div class="ac-card">
+              <div class="ac-card-id" style="color:#10b981">AC32.04</div>
+              <div class="ac-card-text">Assurer des connexions sécurisées</div>
+              <div class="ac-card-desc">Authentification EAP/802.1x pour le Wi-Fi ; authentification centralisée Active Directory pour l'accès au Remote Desktop Web.</div>
+            </div>
+            <div class="ac-card">
+              <div class="ac-card-id" style="color:#10b981">AC33.04</div>
+              <div class="ac-card-text">Déployer un environnement informatique</div>
+              <div class="ac-card-desc">Déploiement automatisé des postes clients via GPO ciblées par OU (fonds d'écran métier, raccourcis web, restrictions CMD).</div>
+            </div>
+            <div class="ac-card">
+              <div class="ac-card-id" style="color:#10b981">AC33.06</div>
+              <div class="ac-card-text">Sécuriser les environnements numériques</div>
+              <div class="ac-card-desc">Durcissement des postes par GPO, supervision Prometheus + Grafana + Windows Exporter, script PowerShell d'audit des utilisateurs AD.</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- ══ DOCUMENT DE PREUVES ══ -->
+        <div class="proof-divider">
+          <div class="proof-divider-line"></div>
+          <div class="proof-divider-label">Document de Preuves</div>
+          <div class="proof-divider-line"></div>
+        </div>
+
+        <!-- Vue d'ensemble -->
+        <div class="detail-section reveal">
+          <p class="detail-section-label">Vue d'ensemble</p>
+          <h2 class="detail-section-title">Périmètre du projet</h2>
+
+          <p class="detail-text">
+            Ce projet de fin de semestre simule une <strong>migration réelle vers une infrastructure professionnelle</strong>. L'objectif : concevoir et déployer une infrastructure réseau moderne et redondante pour une PME, garantissant la haute disponibilité des services et une sécurité renforcée des accès.
+          </p>
+
+          <div class="pole-grid">
+            <div class="pole-card">
+              <div class="pole-card-icon">🏢</div>
+              <div class="pole-card-title">Annuaire &amp; Identité</div>
+              <div class="pole-card-desc">Active Directory, OU, groupes de sécurité, réplication DC</div>
+            </div>
+            <div class="pole-card">
+              <div class="pole-card-icon">🌐</div>
+              <div class="pole-card-title">Réseau &amp; Mobilité</div>
+              <div class="pole-card-desc">Cisco 2960, OSPF, Wi-Fi WPA2/WPA3 Enterprise, SSID invités</div>
+            </div>
+            <div class="pole-card">
+              <div class="pole-card-icon">⚙️</div>
+              <div class="pole-card-title">Services Avancés</div>
+              <div class="pole-card-desc">DHCP routeur, RD Web, Apache intranet, Debian 10</div>
+            </div>
+            <div class="pole-card">
+              <div class="pole-card-icon">📊</div>
+              <div class="pole-card-title">Supervision &amp; Automatisation</div>
+              <div class="pole-card-desc">Prometheus + Grafana, GPO, script PowerShell AD</div>
+            </div>
+          </div>
+
+          <div class="pro-quote">
+            « Ma plus grande fierté sur ce dossier : avoir réussi à <strong>coupler l'authentification Wi-Fi physique avec l'annuaire virtuel Active Directory</strong>, tout en assurant une supervision proactive via Grafana. »
+          </div>
+        </div>
+
+        <!-- Pôle 1 — Active Directory -->
+        <div class="detail-section reveal" data-delay="0.08">
+          <p class="detail-section-label">Pôle 1</p>
+          <h2 class="detail-section-title">Services d'Annuaire et Identité — Active Directory</h2>
+
+          <p class="detail-text">
+            Le cœur de l'infrastructure identitaire repose sur un domaine <strong>etu40.sae</strong> géré via <strong>AD-DS sur Windows Server 2022</strong>. La structuration en unités d'organisation (OU) permet une administration granulaire des utilisateurs par métier.
+          </p>
+
+          <div class="step">
+            <div class="step-header">
+              <div class="step-num">1</div>
+              <div class="step-title">Déploiement du domaine etu40.sae</div>
+            </div>
+            <div class="step-desc">
+              Installation du rôle <strong>AD-DS</strong> et promotion du serveur en contrôleur de domaine. Création du domaine <code style="color:#10b981">etu40.sae</code>. Configuration du DNS intégré à l'Active Directory.
+            </div>
+            <div class="code-block"><span class="cm"># PowerShell — Installation AD-DS et promotion DC</span>
+<span class="kw">Install-WindowsFeature</span> -Name AD-Domain-Services -IncludeManagementTools
+
+<span class="kw">Install-ADDSForest</span> `
+  -DomainName <span class="str">"etu40.sae"</span> `
+  -DomainNetbiosName <span class="str">"ETU40"</span> `
+  -InstallDNS `
+  -Force</div>
+            <div class="result-badge green">Domaine etu40.sae opérationnel</div>
+          </div>
+
+          <div class="step">
+            <div class="step-header">
+              <div class="step-num">2</div>
+              <div class="step-title">Structuration en unités d'organisation (OU)</div>
+            </div>
+            <div class="step-desc">
+              Création d'une hiérarchie d'OU segmentée par métier pour appliquer des GPO ciblées et gérer les accès avec précision. Chaque OU dispose de groupes de sécurité dédiés.
+            </div>
+            <div class="step-desc" style="margin-top:10px">
+              Arborescence OU déployée :
+              <ul style="padding-left:18px;margin-top:8px;list-style:disc;color:var(--muted-2);line-height:1.9">
+                <li><strong>OU=Production</strong> — opérateurs machines, accès restreint</li>
+                <li><strong>OU=Techniciens</strong> — personnel technique, droits étendus</li>
+                <li><strong>OU=Responsables</strong> — management, accès complet aux ressources</li>
+              </ul>
+            </div>
+            <div class="result-badge green">3 OU + groupes de sécurité déployés</div>
+          </div>
+
+          <div class="step">
+            <div class="step-header">
+              <div class="step-num">3</div>
+              <div class="step-title">Haute disponibilité — Contrôleur de domaine redondant</div>
+            </div>
+            <div class="step-desc">
+              Configuration d'un <strong>second contrôleur de domaine</strong> avec réplication Active Directory. En cas de panne du DC principal, le secondaire prend automatiquement le relais, garantissant la continuité d'authentification.
+            </div>
+            <div class="code-block"><span class="cm"># Vérifier l'état de la réplication AD</span>
+<span class="kw">repadmin</span> /replsummary
+<span class="kw">repadmin</span> /showrepl
+
+<span class="cm"># Forcer une réplication immédiate</span>
+<span class="kw">repadmin</span> /syncall /AdeP</div>
+            <div class="result-badge success">Réplication AD validée — infrastructure redondante</div>
+          </div>
+        </div>
+
+        <!-- Pôle 2 — Réseau & Wi-Fi -->
+        <div class="detail-section reveal" data-delay="0.12">
+          <p class="detail-section-label">Pôle 2</p>
+          <h2 class="detail-section-title">Infrastructure Réseau et Mobilité</h2>
+
+          <p class="detail-text">
+            L'architecture LAN s'appuie sur des <strong>switchs Cisco 2960</strong> interconnectés via un <strong>routage dynamique OSPF</strong>. La partie Wi-Fi intègre une sécurité enterprise en liant l'authentification physique à l'annuaire Active Directory.
+          </p>
+
+          <div class="step">
+            <div class="step-header">
+              <div class="step-num">1</div>
+              <div class="step-title">Routage dynamique OSPF</div>
+            </div>
+            <div class="step-desc">
+              Configuration du protocole <strong>OSPF (Open Shortest Path First)</strong> sur les routeurs pour un routage dynamique et adaptatif. Les routes sont annoncées automatiquement entre les équipements du réseau.
+            </div>
+            <div class="code-block"><span class="cm">! Configuration OSPF sur routeur Cisco</span>
+router ospf <span class="val">1</span>
+ router-id <span class="val">1.1.1.1</span>
+ network <span class="val">192.168.10.0</span> <span class="val">0.0.0.255</span> area <span class="val">0</span>
+ network <span class="val">192.168.20.0</span> <span class="val">0.0.0.255</span> area <span class="val">0</span>
+ passive-interface default
+ no passive-interface GigabitEthernet0/0</div>
+            <div class="result-badge green">Routage dynamique OSPF opérationnel</div>
+          </div>
+
+          <div class="step">
+            <div class="step-header">
+              <div class="step-num">2</div>
+              <div class="step-title">Wi-Fi WPA2/WPA3 Enterprise — Authentification RADIUS (NPS)</div>
+            </div>
+            <div class="step-desc">
+              Implémentation d'une authentification <strong>802.1x / WPA2-WPA3 Enterprise</strong> via le serveur <strong>NPS (Network Policy Server)</strong> intégré à Windows Server. Les utilisateurs s'authentifient directement avec leurs comptes Active Directory pour se connecter au Wi-Fi.
+            </div>
+            <div class="step-desc" style="margin-top:10px">
+              Flux d'authentification :
+              <ul style="padding-left:18px;margin-top:8px;list-style:disc;color:var(--muted-2);line-height:1.9">
+                <li>Poste client → Point d'accès (demande EAP)</li>
+                <li>Point d'accès → Serveur RADIUS/NPS (RADIUS Access-Request)</li>
+                <li>NPS → Active Directory (vérification des identifiants)</li>
+                <li>Réponse : RADIUS Access-Accept ou Access-Reject</li>
+              </ul>
+            </div>
+            <div class="result-badge success">Authentification Wi-Fi couplée à l'AD — 802.1x validé</div>
+          </div>
+
+          <div class="step">
+            <div class="step-header">
+              <div class="step-num">3</div>
+              <div class="step-title">SSID Invités — Réseau isolé</div>
+            </div>
+            <div class="step-desc">
+              Création d'un SSID <strong>"Invités"</strong> dédié, diffusé uniquement sur la bande <strong>2,4 GHz</strong> avec une limitation de débit. Ce réseau est totalement isolé du LAN interne — aucun accès aux serveurs, partages ou ressources de l'entreprise.
+            </div>
+            <div class="result-badge green">Segmentation invités validée — zéro accès aux ressources internes</div>
+          </div>
+        </div>
+
+        <!-- Pôle 3 — Services Avancés -->
+        <div class="detail-section reveal" data-delay="0.16">
+          <p class="detail-section-label">Pôle 3</p>
+          <h2 class="detail-section-title">Services Réseau Avancés</h2>
+
+          <p class="detail-text">
+            En complément de l'infrastructure de base, plusieurs services métiers ont été déployés pour répondre aux besoins opérationnels de la PME : accès distants sécurisés, hébergement d'intranet et distribution d'adresses IP.
+          </p>
+
+          <div class="step">
+            <div class="step-header">
+              <div class="step-num">1</div>
+              <div class="step-title">DHCP centralisé sur routeur</div>
+            </div>
+            <div class="step-desc">
+              Déploiement du service DHCP directement sur le <strong>routeur Cisco</strong> pour une gestion centralisée des baux IP. Un pool par segment réseau, avec exclusion des adresses réservées aux équipements fixes (serveurs, imprimantes).
+            </div>
+            <div class="code-block"><span class="cm">! Pool DHCP sur routeur</span>
+ip dhcp excluded-address <span class="val">192.168.10.1</span> <span class="val">192.168.10.20</span>
+
+ip dhcp pool <span class="str">VLAN-STAFF</span>
+ network <span class="val">192.168.10.0</span> <span class="val">255.255.255.0</span>
+ default-router <span class="val">192.168.10.1</span>
+ dns-server <span class="val">192.168.10.5</span>
+ lease <span class="val">7</span></div>
+            <div class="result-badge green">Distribution IP automatique opérationnelle</div>
+          </div>
+
+          <div class="step">
+            <div class="step-header">
+              <div class="step-num">2</div>
+              <div class="step-title">Remote Desktop Web (RD Web)</div>
+            </div>
+            <div class="step-desc">
+              Mise en place d'un <strong>portail Remote Desktop Web</strong> permettant aux collaborateurs d'accéder à leurs applications métiers (<strong>LibreOffice</strong>, outils internes) depuis n'importe quel navigateur, sans client RDP installé. L'authentification se fait via les comptes Active Directory.
+            </div>
+            <div class="result-badge success">Accès distant sécurisé via navigateur — authentification AD</div>
+          </div>
+
+          <div class="step">
+            <div class="step-header">
+              <div class="step-num">3</div>
+              <div class="step-title">Serveur web intranet — Apache sur Debian 10</div>
+            </div>
+            <div class="step-desc">
+              Déploiement d'un serveur web <strong>Apache</strong> sous <strong>Debian 10</strong> pour l'hébergement de l'intranet d'entreprise. Accessibles uniquement depuis le réseau interne, les pages fournissent les ressources et informations nécessaires aux collaborateurs.
+            </div>
+            <div class="code-block"><span class="cm"># Installation Apache sur Debian 10</span>
+<span class="kw">apt</span> update &amp;&amp; <span class="kw">apt</span> install -y apache2
+
+<span class="cm"># Activation et démarrage du service</span>
+<span class="kw">systemctl</span> enable apache2
+<span class="kw">systemctl</span> start apache2
+
+<span class="cm"># Vérification du statut</span>
+<span class="kw">systemctl</span> status apache2</div>
+            <div class="result-badge green">Intranet Apache en ligne — accès interne uniquement</div>
+          </div>
+        </div>
+
+        <!-- Pôle 4 — Automatisation & Supervision -->
+        <div class="detail-section reveal" data-delay="0.2">
+          <p class="detail-section-label">Pôle 4</p>
+          <h2 class="detail-section-title">Automatisation et Supervision — Observabilité</h2>
+
+          <p class="detail-text">
+            La gestion manuelle d'une infrastructure d'entreprise est un facteur de risque. Ce pôle couvre la <strong>supervision proactive</strong> des serveurs et l'<strong>automatisation</strong> de la configuration et de l'administration du parc.
+          </p>
+
+          <div class="step">
+            <div class="step-header">
+              <div class="step-num">1</div>
+              <div class="step-title">GPO — Group Policy Objects</div>
+            </div>
+            <div class="step-desc">
+              Déploiement de stratégies de groupe (<strong>GPO</strong>) ciblées par OU pour automatiser la personnalisation et la sécurisation des postes clients.
+            </div>
+            <div class="step-desc" style="margin-top:10px">
+              GPO déployées :
+              <ul style="padding-left:18px;margin-top:8px;list-style:disc;color:var(--muted-2);line-height:1.9">
+                <li><strong>Fond d'écran par métier</strong> — identité visuelle automatique selon l'OU de l'utilisateur</li>
+                <li><strong>Blocage CMD</strong> — désactivation de l'invite de commande pour les profils Production</li>
+                <li><strong>Déploiement de raccourcis web</strong> — icônes sur le bureau pour l'intranet et les outils métiers</li>
+              </ul>
+            </div>
+            <div class="result-badge green">3 GPO déployées et appliquées</div>
+          </div>
+
+          <div class="step">
+            <div class="step-header">
+              <div class="step-num">2</div>
+              <div class="step-title">Monitoring — Stack Prometheus + Grafana</div>
+            </div>
+            <div class="step-desc">
+              Installation de la stack d'observabilité <strong>Prometheus + Grafana</strong> couplée au <strong>Windows Exporter</strong> sur chaque serveur Windows. Les métriques sont collectées en temps réel et affichées dans des tableaux de bord personnalisés.
+            </div>
+            <div class="step-desc" style="margin-top:10px">
+              Métriques supervisées :
+              <ul style="padding-left:18px;margin-top:8px;list-style:disc;color:var(--muted-2);line-height:1.9">
+                <li><strong>CPU</strong> — charge processeur par serveur</li>
+                <li><strong>RAM</strong> — utilisation mémoire et disponibilité</li>
+                <li><strong>Trafic réseau</strong> — entrées/sorties par interface</li>
+                <li><strong>Services Windows</strong> — état en temps réel (AD, NPS, DHCP…)</li>
+              </ul>
+            </div>
+            <div class="result-badge success">Tableaux de bord Grafana opérationnels en temps réel</div>
+          </div>
+
+          <div class="step">
+            <div class="step-header">
+              <div class="step-num">3</div>
+              <div class="step-title">Script PowerShell — Audit et export des utilisateurs AD</div>
+            </div>
+            <div class="step-desc">
+              Développement d'un <strong>script PowerShell</strong> d'audit permettant d'exporter l'ensemble des utilisateurs Active Directory (avec leurs attributs) vers un fichier CSV. Utilisé pour les audits de conformité et les rapports de gestion.
+            </div>
+            <div class="code-block"><span class="cm"># Export des utilisateurs AD vers CSV</span>
+<span class="kw">Get-ADUser</span> -Filter * -Properties * | `
+  <span class="kw">Select-Object</span> Name, SamAccountName, EmailAddress, `
+    Department, Title, Enabled, LastLogonDate | `
+  <span class="kw">Export-Csv</span> -Path <span class="str">"C:\Audit\users_export.csv"</span> `
+    -NoTypeInformation -Encoding UTF8
+
+<span class="kw">Write-Host</span> <span class="str">"Export terminé — $(</span>(<span class="kw">Import-Csv</span> <span class="str">'C:\Audit\users_export.csv'</span>).Count<span class="str">) utilisateurs exportés."</span></div>
+            <div class="result-badge success">Script d'audit AD opérationnel — export CSV automatisé</div>
+          </div>
+        </div>
+
+        <!-- Bilan -->
+        <div class="detail-section reveal" data-delay="0.25">
+          <p class="detail-section-label">Bilan</p>
+          <h2 class="detail-section-title">Compétences validées</h2>
+
+          <p class="detail-text">
+            Ce projet couvre l'intégralité de la chaîne d'une infrastructure PME professionnelle, de l'annuaire jusqu'à la supervision, en passant par la sécurité des accès filaires et sans fil.
+          </p>
+
+          <ul class="check-list">
+            <li>Administration Windows Server 2022 : AD-DS, NPS, RD Web, GPO</li>
+            <li>Haute disponibilité : réplication Active Directory multi-contrôleurs</li>
+            <li>Sécurité Wi-Fi enterprise : 802.1x / RADIUS couplé à l'AD</li>
+            <li>Routage dynamique OSPF sur infrastructure Cisco 2960</li>
+            <li>Supervision proactive : stack Prometheus + Grafana + Windows Exporter</li>
+            <li>Automatisation PowerShell : audit et export des données utilisateurs AD</li>
+            <li>Virtualisation VCenter : déploiement et gestion des VMs</li>
+            <li>Déploiement Linux (Debian 10) : serveur Apache intranet</li>
+          </ul>
+
+          <div style="margin-top:24px;padding:20px;background:var(--bg-2);border:1px solid rgba(16,185,129,.2);border-radius:10px;">
+            <div style="font-size:10px;letter-spacing:3px;text-transform:uppercase;color:#10b981;font-weight:600;margin-bottom:12px">Architecture résultante</div>
+            <ul style="padding-left:18px;list-style:disc;color:var(--muted-2);font-size:13.5px;line-height:1.9">
+              <li>Infrastructure <strong style="color:var(--text)">redondante</strong> — aucun point de défaillance unique sur l'annuaire</li>
+              <li>Authentification unifiée — un compte AD pour le PC, le Wi-Fi et le RD Web</li>
+              <li>Visibilité totale via Grafana — alertes et métriques centralisées</li>
+              <li>Postes clients <strong style="color:var(--text)">sécurisés par GPO</strong> — déploiement automatique à la connexion</li>
+            </ul>
+          </div>
+        </div>
+
+        <!-- ══ CONCLUSION PAR COMPÉTENCE ══ -->
+        <div class="detail-section reveal" data-delay="0.3">
+          <p class="detail-section-label" style="color:#10b981">Conclusion par Compétence</p>
+          <h2 class="detail-section-title">Auto-évaluation &amp; Analyse Réflexive</h2>
+          <p class="detail-text">Évaluation de l'acquisition des apprentissages critiques des Compétences 1 et 3 au travers de cette SAÉ :</p>
+          <div class="autoval-grid">
+            <div class="autoval-row">
+              <span class="autoval-ac">AC31.01 — Concevoir un réseau avec haute disponibilité</span>
+              <span class="badge-acquis">Acquis</span>
+            </div>
+            <div class="autoval-row">
+              <span class="autoval-ac">AC32.01 — Déployer des systèmes de communication</span>
+              <span class="badge-acquis">Acquis</span>
+            </div>
+            <div class="autoval-row">
+              <span class="autoval-ac">AC32.02 — Déployer des réseaux sans fil Enterprise</span>
+              <span class="badge-acquis">Acquis</span>
+            </div>
+            <div class="autoval-row">
+              <span class="autoval-ac">AC32.04 — Assurer des connexions sécurisées (802.1x)</span>
+              <span class="badge-acquis">Acquis</span>
+            </div>
+            <div class="autoval-row">
+              <span class="autoval-ac">AC33.04 — Déployer un environnement informatique (GPO)</span>
+              <span class="badge-acquis">Acquis</span>
+            </div>
+            <div class="autoval-row">
+              <span class="autoval-ac">AC33.06 — Sécuriser les environnements numériques</span>
+              <span class="badge-acquis">Acquis</span>
+            </div>
+          </div>
+          <p class="detail-text" style="margin-bottom:12px">Analyse réflexive :</p>
+          <div class="reflexive-block">
+            <div class="reflexive-item">
+              <div class="reflexive-item-icon">💡</div>
+              <div><strong>Ce que j'ai acquis.</strong> Réussir à coupler l'authentification Wi-Fi physique avec l'annuaire virtuel Active Directory a été ma plus grande fierté sur ce projet. Cela m'a fait comprendre la valeur d'une infrastructure centrée sur l'identité : un seul compte AD donne accès au PC, au Wi-Fi et au Remote Desktop Web.</div>
+            </div>
+            <div class="reflexive-item">
+              <div class="reflexive-item-icon">⚡</div>
+              <div><strong>Principale difficulté.</strong> La configuration du serveur NPS pour le 802.1x a été la partie la plus complexe : le débogage des échanges RADIUS entre le point d'accès et le contrôleur de domaine nécessitait de comprendre l'ensemble du flux EAP, sans documentation adaptée à notre environnement de TP.</div>
+            </div>
+            <div class="reflexive-item">
+              <div class="reflexive-item-icon">🔄</div>
+              <div><strong>Ce que je ferais différemment.</strong> J'aurais intégré Prometheus et Grafana dès le début du déploiement plutôt qu'en fin de projet. Avoir les métriques des serveurs en temps réel dès la phase de configuration aurait accéléré l'identification des problèmes de performance.</div>
+            </div>
+          </div>
+        </div>
+
+      </main>
+
+      <!-- ── SIDEBAR ── -->
+      <aside class="detail-sidebar">
+
+        <div class="sidebar-box">
+          <div class="sidebar-box-title">Informations projet</div>
+          <div class="sidebar-row">
+            <span class="sidebar-row-label">Contexte</span>
+            <span class="sidebar-row-val">SAÉ 3.03</span>
+          </div>
+          <div class="sidebar-row">
+            <span class="sidebar-row-label">Date</span>
+            <span class="sidebar-row-val">Jan. 2025</span>
+          </div>
+          <div class="sidebar-row">
+            <span class="sidebar-row-label">Plateforme</span>
+            <span class="sidebar-row-val emerald">VCenter / VM</span>
+          </div>
+          <div class="sidebar-row">
+            <span class="sidebar-row-label">OS serveurs</span>
+            <span class="sidebar-row-val">WS 2022 + Debian</span>
+          </div>
+          <div class="sidebar-row">
+            <span class="sidebar-row-label">Domaine AD</span>
+            <span class="sidebar-row-val emerald">etu40.sae</span>
+          </div>
+          <div class="sidebar-row">
+            <span class="sidebar-row-label">HA</span>
+            <span class="sidebar-row-val green">DC redondant ✓</span>
+          </div>
+        </div>
+
+        <div class="sidebar-box">
+          <div class="sidebar-box-title">Pôles techniques</div>
+          <div style="display:flex;flex-direction:column;gap:8px;margin-top:4px;font-size:13px;color:var(--muted-2)">
+            <div style="display:flex;align-items:center;gap:8px"><span style="color:#10b981;font-size:10px">▸</span> Annuaire &amp; Identité (AD-DS)</div>
+            <div style="display:flex;align-items:center;gap:8px"><span style="color:#10b981;font-size:10px">▸</span> Wi-Fi Enterprise (RADIUS/NPS)</div>
+            <div style="display:flex;align-items:center;gap:8px"><span style="color:#10b981;font-size:10px">▸</span> Routage OSPF (Cisco)</div>
+            <div style="display:flex;align-items:center;gap:8px"><span style="color:#10b981;font-size:10px">▸</span> RD Web + Apache Intranet</div>
+            <div style="display:flex;align-items:center;gap:8px"><span style="color:#10b981;font-size:10px">▸</span> GPO (3 stratégies)</div>
+            <div style="display:flex;align-items:center;gap:8px"><span style="color:#10b981;font-size:10px">▸</span> Supervision Prometheus/Grafana</div>
+            <div style="display:flex;align-items:center;gap:8px"><span style="color:#10b981;font-size:10px">▸</span> Script PowerShell audit AD</div>
+          </div>
+        </div>
+
+        <div class="sidebar-box">
+          <div class="sidebar-box-title">Stack technique</div>
+          <div style="display:flex;flex-wrap:wrap;gap:6px;margin-top:4px">
+            <span class="detail-tag" style="padding:3px 10px">Windows Server 2022</span>
+            <span class="detail-tag" style="padding:3px 10px">Active Directory</span>
+            <span class="detail-tag" style="padding:3px 10px">NPS/RADIUS</span>
+            <span class="detail-tag" style="padding:3px 10px">OSPF</span>
+            <span class="detail-tag" style="padding:3px 10px">Cisco 2960</span>
+            <span class="detail-tag" style="padding:3px 10px">Prometheus</span>
+            <span class="detail-tag" style="padding:3px 10px">Grafana</span>
+            <span class="detail-tag" style="padding:3px 10px">PowerShell</span>
+            <span class="detail-tag" style="padding:3px 10px">Debian 10</span>
+            <span class="detail-tag" style="padding:3px 10px">Apache</span>
+            <span class="detail-tag" style="padding:3px 10px">VCenter</span>
+          </div>
+        </div>
+
+        <a class="btn-ghost" href="projects.html" style="width:100%;justify-content:center;text-align:center;margin-top:6px">← Tous les projets</a>
+
+      </aside>
+
+    </div>
+  </div>
+
+
+  <!-- ══ FOOTER ══ -->
+  <footer>
+    <div class="footer-logo">Antoine<span>.</span></div>
+    <span>Roanne / Bron · 2026</span>
+    <div class="footer-links">
+      <a href="index.html">Accueil</a>
+      <a href="projects.html">Projets</a>
+      <a href="index.html#contact">Contact</a>
+    </div>
+  </footer>
+
+  <script src="main.js"></script>
+</body>
+</html>
